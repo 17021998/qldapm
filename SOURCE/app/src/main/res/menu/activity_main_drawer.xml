@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_measure"
+            android:icon="@drawable/ic_menu_measure"
+            android:width="20dp"
+            android:title="Measure" />
+        <item
+            android:id="@+id/nav_measure_by_age"
+            android:icon="@drawable/ic_menu_age"
+            android:width="20dp"
+            android:title="Measure age range" />
+        <item
+            android:id="@+id/nav_chart"
+            android:icon="@drawable/ic_menu_chart"
+            android:width="20dp"
+            android:title="Chart" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_menu_save"
+            android:width="20dp"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_quit"
+            android:icon="@drawable/ic_menu_quit"
+            android:title="Quit" />
+    </group>
+
+    <item android:title="Communicate"
+          android:visible="false"
+        >
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+        </menu>
+    </item>
+
+</menu>

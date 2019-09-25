@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_icClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:padding="@dimen/dp16"
+                android:src="@drawable/ic_close_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_forgot"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:attr/actionBarSize"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:padding="@dimen/dp12"
+                android:text="@string/Onboarding_Tutorial_Login_CTA__Forgot"
+                android:textAllCaps="true"
+                android:textColor="@color/primaryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/dp18"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_icClose">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/background"
+                android:fitsSystemWindows="true"
+                >
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Onboarding_Tutorial_CreateAccount_CTA__LogIn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="30dp"
+                    android:textColor="@color/primaryColor"
+                    android:textAllCaps="true"
+                    />
+
+
+                <ScrollView
+                    android:id="@+id/sv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:fillViewport="true"
+                    android:overScrollMode="never"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_have_account"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_email"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp24"
+                            android:layout_marginTop="@dimen/dp44"
+                            android:layout_marginEnd="@dimen/dp24"
+                            app:layout_constraintBottom_toTopOf="@+id/input_password"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/Onboarding_Tutorial_CreateAccount_Input__Email"
+                                android:inputType="textEmailAddress" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_checked_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp16"
+                            android:src="@drawable/ic_check_green"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/input_email"
+                            app:layout_constraintEnd_toEndOf="@+id/input_email"
+                            app:layout_constraintTop_toTopOf="@+id/input_email" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_password"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp24"
+                            android:layout_marginTop="@dimen/dp24"
+                            android:layout_marginEnd="@dimen/dp24"
+                            app:layout_constraintBottom_toTopOf="@+id/input_email"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/input_email"
+                            app:passwordToggleContentDescription="@null"
+                            app:passwordToggleDrawable="@drawable/toggle_show_hide_content"
+                            app:passwordToggleEnabled="true"
+                            app:passwordToggleTint="@color/activeColorPrimary"
+                            app:passwordToggleTintMode="src_in">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/Onboarding_Tutorial_CreateAccount_Input__Password"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/tv_error_check_combine"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp24"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginEnd="@dimen/dp24"
+                            android:drawableStart="@drawable/gray_dot"
+                            android:drawablePadding="@dimen/dp10"
+                            android:gravity="start"
+                            android:text="@string/Onboarding_SignUp_PasswordInput_Text__ContainsBothLettersNumbers"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/input_password" />
+
+                        <TextView
+                            android:id="@+id/tv_error_check_character"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp24"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginEnd="@dimen/dp24"
+                            android:drawableStart="@drawable/gray_dot"
+                            android:drawablePadding="@dimen/dp10"
+                            android:gravity="start"
+                            android:text="@string/Onboarding_SignUp_PasswordInput_Text__Min7Characters"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_error_check_combine" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/br_bottom"
+                            android:layout_width="@dimen/dp56"
+                            android:layout_height="@dimen/dp56"
+                            app:barrierAllowsGoneWidgets="false"
+                            app:barrierDirection="top"
+                            app:constraint_referenced_ids="iv_google" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/br_top"
+                            android:layout_width="@dimen/dp56"
+                            android:layout_height="@dimen/dp56"
+                            app:barrierAllowsGoneWidgets="false"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="iv_google" />
+
+                        <TextView
+                            android:id="@+id/tv_signup_via"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp24"
+                            android:gravity="left"
+                            android:text="@string/Onboarding_Tutorial_Login_Text__OrLogInVia"
+                            android:textColor="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="@+id/br_bottom"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_facebook"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/br_top"
+                            android:textSize="@dimen/dp18"
+                            />
+
+                        <ImageView
+                            android:id="@+id/iv_facebook"
+                            android:layout_width="@dimen/dp80"
+                            android:layout_height="@dimen/dp80"
+                            android:layout_marginTop="@dimen/dp32"
+                            android:layout_marginBottom="@dimen/dp10"
+                            android:src="@drawable/icon_facebook"
+                            android:layout_marginEnd="@dimen/dp5"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_google"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_error_check_combine" />
+
+                        <ImageView
+                            android:id="@+id/iv_google"
+                            android:layout_width="@dimen/dp80"
+                            android:layout_height="@dimen/dp80"
+                            android:layout_marginTop="@dimen/dp32"
+                            android:layout_marginBottom="@dimen/dp10"
+                            android:layout_marginEnd="@dimen/dp5"
+                            android:src="@drawable/icon_google"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_error_check_combine" />
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </ScrollView>
+
+                <TextView
+                    android:id="@+id/tv_have_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp12"
+                    android:text="@string/Onboarding_Tutorial_Login_Text__DontHaveAnAccount"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_login"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/dp15"
+                    app:layout_constraintTop_toBottomOf="@+id/sv_content" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_height="@dimen/dp70"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp12"
+                    android:layout_marginBottom="@dimen/dp12"
+                    android:text="@string/Onboarding_Tutorial_CreateAccount_CTA__LogIn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_have_account"
+                    android:textSize="@dimen/dp20"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/primaryColor"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data />
+</layout>

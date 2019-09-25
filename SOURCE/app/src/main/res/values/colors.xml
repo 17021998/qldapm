@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3C4E64</color>
+    <color name="colorPrimaryDark">#3C4E64</color>
+    <color name="colorAccent">#EC0404</color>
+    <color name="colorCrimson">#DC143C</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorMain">#3C4E64</color>
+    <color name="background">#FAF8F6</color>
+    <color name="activeColorPrimary">#242424</color>
+    <color name="gray">#b3b2b1</color>
+    <color name="error">#d22b20</color>
+    <color name="primaryColor">#242424</color>
+    <color name="placeholderText">#737373</color>
+    <color name="primaryText">#242424</color>
+    <color name="secondaryText">#727272</color>
+    <color name="nonReachGoal">#a7a7a7</color>
+</resources>

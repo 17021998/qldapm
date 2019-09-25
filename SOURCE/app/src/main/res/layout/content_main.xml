@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".View.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <ProgressBar
+        android:id="@+id/per_processing"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/circle_default"
+        android:progress="0"
+        android:max="1000"
+        android:progressDrawable="@drawable/circle"
+        android:progressTint="#FF1B1B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06999999"
+        tools:ignore="MissingConstraints"></ProgressBar>
+
+    <TextView
+        android:id="@+id/hearthbeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="#"
+        android:textColor="#fff"
+        android:textSize="50sp"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/per_processing"
+        app:layout_constraintEnd_toStartOf="@+id/per_processing"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/per_processing"
+        app:layout_constraintTop_toBottomOf="@+id/per_processing" />
+
+    <TextureView
+        android:id="@+id/camera_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="165dp"
+        android:layout_weight="9"
+        app:layout_constraintStart_toStartOf="@+id/per_processing"
+        app:layout_constraintTop_toTopOf="@+id/per_processing"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/heartview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="165dp"
+        app:layout_constraintStart_toStartOf="@+id/per_processing"
+        app:layout_constraintTop_toTopOf="@+id/per_processing"
+        app:srcCompat="@drawable/heartframe" />
+
+    <TextView
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/start1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Start"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/stop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="76dp"
+        android:text="Stop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/heartframe"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="165dp"
+        app:layout_constraintStart_toStartOf="@+id/per_processing"
+        app:layout_constraintTop_toTopOf="@+id/per_processing"
+        app:srcCompat="@drawable/heartframe" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modal_save"
+        android:layout_width="340dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/design_default_color_primary"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/close_modal_save"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:background="#ff965e"
+            android:bottomLeftRadius="20dp"
+            android:bottomRightRadius="20dp"
+            android:elevation="4dp"
+            android:text="Save"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#000"
+            android:topLeftRadius="20dp"
+            android:topRightRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/close_modal_without_save"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="#ff965e"
+            android:bottomLeftRadius="20dp"
+            android:bottomRightRadius="20dp"
+            android:elevation="4dp"
+            android:text="Close"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#000"
+            android:topLeftRadius="20dp"
+            android:topRightRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/close_modal_save"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/header_modal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:text="Your heart rate is"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:typeface="sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/content_modal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="56"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="90sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toTopOf="@+id/footer_modal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/footer_modal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
+            android:text=" BPM"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:typeface="sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="textShortMessage|textPersonName|textCapSentences"
+            android:text="Default"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toTopOf="@+id/close_modal_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="80dp"
+        android:text="BPM"
+        android:textColor="#C0C0C0"
+        app:layout_constraintStart_toStartOf="@+id/per_processing"
+        app:layout_constraintTop_toTopOf="@+id/per_processing" />
+
+    <ImageView
+        android:id="@+id/firer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintEnd_toEndOf="@+id/per_processing"
+        app:layout_constraintStart_toStartOf="@+id/per_processing"
+        app:layout_constraintTop_toTopOf="@+id/per_processing"
+        app:srcCompat="@drawable/gray" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="-30dp"
+        android:layout_marginEnd="-30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
