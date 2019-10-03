@@ -47,13 +47,13 @@ import android.widget.Toast;
 
 import com.example.measurehearthrate.ArrayBeat;
 import com.example.measurehearthrate.Filter;
-import com.example.measurehearthrate.Helper.DatabaseHelper;
+import com.example.measurehearthrate.Database.DatabaseHelper;
 import com.example.measurehearthrate.Processing.ImageProcessing;
 import com.example.measurehearthrate.Model.ItemHistory;
 import com.example.measurehearthrate.Adapter.ListAge;
 import com.example.measurehearthrate.Adapter.ListHistories;
 import com.example.measurehearthrate.MyToast;
-import com.example.measurehearthrate.Helper.MyXAxisValueFormatter;
+import com.example.measurehearthrate.MyXAxisValueFormatter;
 import com.example.measurehearthrate.R;
 import com.example.measurehearthrate.StatCamera;
 import com.github.mikephil.charting.charts.BarChart;

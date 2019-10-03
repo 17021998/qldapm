@@ -18,7 +18,7 @@
         android:hardwareAccelerated="true"
         >
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.SignUpActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
