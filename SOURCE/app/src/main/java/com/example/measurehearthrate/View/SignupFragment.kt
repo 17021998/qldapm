@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -25,7 +27,7 @@ import javax.inject.Inject
 class SignUpFragment : BaseFragment(), SignupContracts {
 
 
-    lateinit var mViewModel: SignUpViewModel
+    private lateinit var mViewModel: SignUpViewModel
     private lateinit var mBinding: AutoClearedValue<FragmentSignupBinding>
 
     @Inject
@@ -34,11 +36,11 @@ class SignUpFragment : BaseFragment(), SignupContracts {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val dataBinding = DataBindingUtil.inflate<FragmentSignupBinding>(inflater, R.layout.fragment_signup, container, false)
 
-//        MyApplication.appComponent
-//                .plus(SignUpModule(this))
-//                .inject(this@SignUpFragment)
+        MyApplication.instance.appComponent
+                .plus(SignUpModule())
+                .inject(this)
 
-        mViewModel = ViewModelProviders.of(this@SignUpFragment,viewModelFactory).get(SignUpViewModel::class.java)
+        mViewModel = ViewModelProviders.of(this@SignUpFragment, viewModelFactory).get(SignUpViewModel::class.java)
 
         ViewModelObserve()
 
@@ -49,14 +51,18 @@ class SignUpFragment : BaseFragment(), SignupContracts {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         mBinding.get()?.let { binding ->
+
             binding.btnSignup.setOnClickListener { mViewModel.register() }
 
-            binding.etEmail.addTextChangedListener(object :TextWatcher {
+
+            binding.etEmail.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    mViewModel.onPasswordChanged(s.toString())
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -65,20 +71,111 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
             })
 
+
+            binding.etPassword.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    Log.d(TAG,"Password onTextChanged: $s")
+                    mViewModel.onPasswordChanged(s.toString())
+                }
+
+            })
+
+            binding.etPassword.setOnFocusChangeListener { _, hasFocus ->
+                mViewModel.onPasswordChanged()
+                if (hasFocus) {
+                    binding.tvErrorCheckCharacter.visibility = View.VISIBLE
+                    binding.tvErrorCheckCombine.visibility = View.VISIBLE
+                } else {
+                    binding.tvErrorCheckCharacter.visibility = View.GONE
+                    binding.tvErrorCheckCombine.visibility = View.GONE
+                }
+            }
+
+            binding.ivClose.setOnClickListener {
+                activity?.finish()
+            }
+
+
         }
     }
 
+    private fun enableSignUpButton() {
+        mBinding.get()?.let {
+            it.btnSignup.isEnabled = true
+            it.btnSignup.isClickable = true
+            it.btnSignup.isFocusable = true
+            it.btnSignup.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.primaryColor))
 
-    private fun ViewModelObserve() {
-        mViewModel.uiState.observe(this, Observer {
-            val uiModel = it ?: return@Observer
-
-            if (uiModel.register) {
-                Toast.makeText(activity, "onClick BtnSignUp", Toast.LENGTH_SHORT).show()
-            }
-        })
+        }
     }
 
+    private fun disableSignUpButton() {
+        mBinding.get()?.let {
+            it.btnSignup.isEnabled = false
+            it.btnSignup.isClickable = false
+            it.btnSignup.isFocusable = false
+
+        }
+    }
+
+    private fun ViewModelObserve() {
+        mViewModel.passwordState.observe(this, Observer {
+            val passModel = it?:return@Observer
+            mBinding.get()?.let {
+                if (passModel.isMinPasswordMet) {
+                    it.tvErrorCheckCharacter.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(MyApplication.instance,
+                            R.drawable.ic_ok_button), null, null, null)
+                } else {
+                    it.tvErrorCheckCharacter.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(MyApplication.instance,
+                            R.drawable.gray_dot), null, null, null)
+                }
+
+                if (passModel.isPasswordFormatMet) {
+                    it.tvErrorCheckCombine.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(MyApplication.instance,
+                            R.drawable.ic_ok_button), null, null, null)
+                } else {
+                    it.tvErrorCheckCombine.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(MyApplication.instance,
+                            R.drawable.gray_dot), null, null, null)
+                }
+            }
+        })
+
+        mViewModel.emailState.observe(this, Observer {
+            val emailModel = it ?: return@Observer
+
+            mBinding.get()?.let {
+                it.inputEmail.isErrorEnabled = emailModel.enableError
+                it.inputEmail.error = emailModel.errorMessage
+            }
+
+            mBinding.get()?.ivCheckedEmail?.let {
+                it.visibility = if (emailModel.isValid!!) View.VISIBLE else View.GONE
+            }
+
+        })
+
+        mViewModel.btnSignUpState.observe(this, Observer {
+            val btnSignUpModel = it?: return@Observer
+            if (btnSignUpModel.onClick) {
+                Toast.makeText(activity, "onClick BtnSignUp", Toast.LENGTH_SHORT).show()
+            }
+
+            if(btnSignUpModel.isEnable) {
+                enableSignUpButton()
+            }
+            else {
+                disableSignUpButton()
+            }
+        })
+
+
+    }
 
     override fun enableSignup() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -92,22 +189,6 @@ class SignUpFragment : BaseFragment(), SignupContracts {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onEmailValidation(isMet: Boolean, enableError: Boolean, errorMessage: String) {
-        if (!isAdded) return
-        mBinding.get()?.let {
-            it.inputEmail.isErrorEnabled = enableError
-            it.inputEmail.error = errorMessage
-        }
-
-        mBinding.get()?.ivCheckedEmail?.let {
-            it.visibility = if (isMet) View.VISIBLE else View.GONE
-        }
-
-    }
-
-    override fun onPasswordValidation(isMinCharacterMet: Boolean, isCombineLetterDigitMet: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -128,6 +209,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
     override fun onResume() {
         super.onResume()
+        mViewModel.start()
     }
 
     override fun onPause() {
@@ -152,6 +234,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
     companion object {
         fun newInstance() = SignUpFragment()
+        const val TAG = "SignUpFragment"
     }
 
 

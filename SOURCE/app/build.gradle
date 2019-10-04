@@ -70,6 +70,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.16"
     implementation "com.google.dagger:dagger-android-support:2.16"
     kapt "com.google.dagger:dagger-compiler:2.16"
+    kapt "com.google.dagger:dagger-android-processor:2.16"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
 
 
 

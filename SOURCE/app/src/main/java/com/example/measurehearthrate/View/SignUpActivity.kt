@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.measurehearthrate.Base.BaseActivity
+import com.example.measurehearthrate.Base.MyApplication
+import com.example.measurehearthrate.Dagger.Module.SignUpModule
 import com.example.measurehearthrate.R
 import dagger.android.AndroidInjection
 
@@ -27,7 +29,6 @@ class SignUpActivity : BaseActivity() {
             fragment = SignUpFragment.newInstance()
             addFragment(fragment,TAG,R.id.content)
         }
-
 
 
 

@@ -1,16 +1,16 @@
 package com.example.measurehearthrate.Dagger.Module
 
-import androidx.annotation.NonNull
-import com.example.measurehearthrate.Base.BaseFragment
+import androidx.lifecycle.ViewModel
+import com.example.measurehearthrate.Interface.ViewModelKey
+import com.example.measurehearthrate.ViewModel.SignUpViewModel
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.multibindings.IntoMap
 
 @Module
-class SignUpModule (val mContext: BaseFragment) {
-    @Provides
-    @NonNull
-    fun provideContext() : BaseFragment {
-        return mContext
-    }
+class SignUpModule (){
+
+
+
 
 }

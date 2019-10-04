@@ -2,6 +2,7 @@ package com.example.measurehearthrate.Dagger.Module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.measurehearthrate.Factory.AppViewModelFactory
 import com.example.measurehearthrate.Interface.ViewModelKey
 import com.example.measurehearthrate.ViewModel.SignUpViewModel
@@ -18,6 +19,5 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
-    abstract fun bindWatchSettingViewModel(modelHome: SignUpViewModel): ViewModel
-
+    abstract fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
 }

@@ -1,43 +1,50 @@
 package com.example.measurehearthrate.ViewModel
 
+import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Helper.ValidationHelper
 import com.example.measurehearthrate.R
-import com.example.measurehearthrate.Base.BaseActivity
 import com.example.measurehearthrate.Base.BaseViewModel
-import java.util.regex.Pattern
+import com.example.measurehearthrate.Base.MyApplication
+import com.example.measurehearthrate.Helper.LanguagesHelper
 import javax.inject.Inject
 
-class SignUpViewModel @Inject internal  constructor(private val mContext: BaseActivity): BaseViewModel(){
+
+
+class SignUpViewModel @Inject constructor(): BaseViewModel(){
+
 
     private var mEmail: String? = null
     private var mPassword: String? = null
 
-    private var mUiState: MutableLiveData<UIModelWrapper> = MutableLiveData()
+    private var mEmailState: MutableLiveData<UiEmailWrapper> = MutableLiveData()
+    private var mPasswordState: MutableLiveData<UiPassWordWrapper> = MutableLiveData()
+    private var mSignUpButtonState: MutableLiveData<UiSignUpButtonWrapper> = MutableLiveData()
 
-    val uiState: LiveData<UIModelWrapper>
-            get() = mUiState
+
+
+    val emailState: LiveData<UiEmailWrapper>
+            get() = mEmailState
+
+    val passwordState: LiveData<UiPassWordWrapper>
+        get() = mPasswordState
+
+    val btnSignUpState: LiveData<UiSignUpButtonWrapper>
+        get() = mSignUpButtonState
 
     companion object {
         val TAG = SignUpViewModel::class.java.simpleName
-        const val MINIMUM_PASSWORD_LENGTH = 7
-        val passWordPattern = Pattern.compile("((?=.*\\d)(?=.*[a-zA-Z]).+)")!!
+    }
+
+    override fun start() {
+        isEnableSignUpButton()
     }
 
     fun register() {
-        emitUiState(true)
+        emitBtnSignUpState(true,true)
     }
 
-    private fun emitUiState(
-            register: Boolean = false,
-            isValid: Boolean ?= null,
-            enableError: Boolean?= null,
-            errorMessage: String?= null
-    ) {
-        val uiModelWrapper = UIModelWrapper(register,isValid,enableError,errorMessage)
-        mUiState.postValue(uiModelWrapper)
-    }
 
     fun onEmailTextChanged(email: String) {
         mEmail = email
@@ -47,23 +54,91 @@ class SignUpViewModel @Inject internal  constructor(private val mContext: BaseAc
 
     private fun isEmailValid() : Boolean {
         return if( mEmail.isNullOrEmpty()) {
-            emitUiState(false,false,false,"")
+            emitEmailState(false,false,"")
             false
         } else if(!ValidationHelper.isEmailValid(mEmail!!)) {
-            emitUiState(false,false,false,mContext.resources.getString(R.string.SignUp_InputError_Text__InvalidEmailAddress))
+            emitEmailState(false,true,LanguagesHelper.getString(MyApplication.instance, R.string.SignUp_InputError_Text__InvalidEmailAddress))
             false
         } else {
-            emitUiState(false,true,false,"")
+            emitEmailState(true,false,"")
             true
         }
 
     }
 
-    data class UIModelWrapper(
-            var register: Boolean,
+    fun onPasswordChanged(pass: String ?= mPassword ) {
+        mPassword = pass
+        isPassValid()
+        isEnableSignUpButton()
+    }
+
+    private fun isPassValid() : Boolean {
+        return if(mPassword.isNullOrEmpty()) {
+            emitPasswordState(false,false)
+            false
+        } else {
+            val isMinCharMet = ValidationHelper.isMinPasswordVilid(mPassword!!)
+            val isFormatMet = ValidationHelper.isPasswordFormatdValid(mPassword!!)
+            emitPasswordState(isMinCharMet,isFormatMet)
+            isMinCharMet && isFormatMet
+        }
+     }
+
+    private fun isEnableSignUpButton() {
+        val isEmailPasswordEmpty = TextUtils.isEmpty(mEmail) || TextUtils.isEmpty(mPassword)
+        val isEmailMet = isEmailValid()
+        val isPasswordMet = isPassValid()
+
+        if (!isEmailPasswordEmpty && isPasswordMet && isEmailMet) {
+            emitBtnSignUpState(false,true)
+        } else {
+            emitBtnSignUpState(false,false)
+        }
+    }
+
+    private fun emitEmailState(
+            isValid: Boolean ?= null,
+            enableError: Boolean = false,
+            errorMessage: String?= null
+
+    ) {
+        val uiModelWrapper = UiEmailWrapper(isValid,enableError,errorMessage)
+        mEmailState.postValue(uiModelWrapper)
+    }
+
+    private fun emitPasswordState(
+            isMinPassMet: Boolean= false,
+            isPassFormatMet: Boolean = false)
+    {
+        val uiModelWrapper = UiPassWordWrapper(isMinPassMet,isPassFormatMet)
+        mPasswordState.postValue(uiModelWrapper)
+    }
+
+    private fun emitBtnSignUpState(
+            click: Boolean = false,
+            isEnable: Boolean = false
+    ) {
+        val uiBtnSignUpModel = UiSignUpButtonWrapper(click,isEnable)
+        mSignUpButtonState.postValue(uiBtnSignUpModel)
+    }
+
+    data class UiEmailWrapper(
+
             var isValid: Boolean?,
-            var enableError: Boolean?,
+            var enableError: Boolean,
             var errorMessage: String?
+
+    )
+
+    data class UiPassWordWrapper(
+            var isMinPasswordMet: Boolean,
+            var isPasswordFormatMet: Boolean
+    )
+
+
+    data class UiSignUpButtonWrapper (
+            var onClick: Boolean,
+            var isEnable: Boolean
     )
 
 

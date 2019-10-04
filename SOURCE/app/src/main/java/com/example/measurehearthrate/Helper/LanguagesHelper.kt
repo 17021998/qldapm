@@ -3,6 +3,7 @@ package com.example.measurehearthrate.Helper
 import android.content.Context
 import android.content.res.Resources
 import android.text.TextUtils
+import com.example.measurehearthrate.R
 
 class LanguagesHelper {
 
@@ -15,7 +16,7 @@ class LanguagesHelper {
             val resourceName: String
 
             try {
-                resourceName = context.resources.getResourceEntryName(resourceId)
+                resourceName = context.resources.getString(R.string.SignUp_InputError_Text__InvalidEmailAddress)
             } catch (e: Resources.NotFoundException) {
                 return ""
             }
