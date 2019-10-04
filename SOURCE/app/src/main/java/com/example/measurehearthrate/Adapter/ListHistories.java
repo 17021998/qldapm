@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.measurehearthrate.Filter;
-import com.example.measurehearthrate.Helper.DatabaseHelper;
+import com.example.measurehearthrate.Database.DatabaseHelper;
 import com.example.measurehearthrate.Model.ItemHistory;
 import com.example.measurehearthrate.MyToast;
 import com.example.measurehearthrate.R;

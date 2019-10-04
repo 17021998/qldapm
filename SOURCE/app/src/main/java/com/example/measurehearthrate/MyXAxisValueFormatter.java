@@ -1,4 +1,4 @@
-package com.example.measurehearthrate.Helper;
+package com.example.measurehearthrate;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;

@@ -1,4 +1,4 @@
-package com.example.measurehearthrate.Helper;
+package com.example.measurehearthrate.Database;
 
 import android.content.ContentValues;
 import android.content.Context;

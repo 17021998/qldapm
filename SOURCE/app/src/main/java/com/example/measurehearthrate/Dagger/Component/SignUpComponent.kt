@@ -1,0 +1,14 @@
+package com.example.measurehearthrate.Dagger.Component
+
+import com.example.measurehearthrate.Dagger.Module.SignUpModule
+import com.example.measurehearthrate.Interface.ActivityScoped
+import com.example.measurehearthrate.View.SignUpActivity
+import com.example.measurehearthrate.View.SignUpFragment
+import dagger.Component
+import dagger.Subcomponent
+
+@ActivityScoped
+@Subcomponent(modules = [(SignUpModule::class)])
+interface SignUpComponent {
+    fun inject(view: SignUpFragment)
+}
