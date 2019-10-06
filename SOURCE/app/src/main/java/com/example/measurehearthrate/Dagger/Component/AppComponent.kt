@@ -3,10 +3,7 @@ package com.example.measurehearthrate.Dagger.Component
 import com.example.measurehearthrate.Base.BaseActivity
 import com.example.measurehearthrate.Base.BaseFragment
 import com.example.measurehearthrate.Base.MyApplication
-import com.example.measurehearthrate.Dagger.Module.ActivityBuilderModule
-import com.example.measurehearthrate.Dagger.Module.AppModule
-import com.example.measurehearthrate.Dagger.Module.SignUpModule
-import com.example.measurehearthrate.Dagger.Module.ViewModelModule
+import com.example.measurehearthrate.Dagger.Module.*
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.support.AndroidSupportInjection
@@ -33,5 +30,8 @@ interface AppComponent  {
 
     @NotNull
     fun plus(signUpModule: SignUpModule): SignUpComponent
+
+    @NotNull
+    fun plus(signInModule: SignInModule): SignInComponent
 
 }

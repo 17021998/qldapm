@@ -20,4 +20,9 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         MyApplication.instance.appComponent.inject(this)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

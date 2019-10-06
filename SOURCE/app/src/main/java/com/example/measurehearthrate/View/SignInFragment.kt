@@ -1,0 +1,141 @@
+package com.example.measurehearthrate.View
+
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.example.measurehearthrate.Base.BaseFragment
+import com.example.measurehearthrate.Base.MyApplication
+import com.example.measurehearthrate.Dagger.Module.SignInModule
+import com.example.measurehearthrate.Factory.AppViewModelFactory
+import com.example.measurehearthrate.R
+import com.example.measurehearthrate.Utils.AutoClearedValue
+import com.example.measurehearthrate.ViewModel.SigninViewModel
+import com.example.measurehearthrate.databinding.FragmentSigninBinding
+import javax.inject.Inject
+
+class SignInFragment : BaseFragment() {
+
+    @Inject
+    lateinit var appViewModelFactory: AppViewModelFactory
+
+    private lateinit var mViewModel: SigninViewModel
+    private lateinit var mBinding: AutoClearedValue<FragmentSigninBinding>
+
+    companion object {
+        fun newInstance() = SignInFragment()
+        const val TAG = "SignUpFragment"
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val databinding = DataBindingUtil.inflate<FragmentSigninBinding>(inflater, R.layout.fragment_signin, container, false)
+
+        MyApplication.instance.appComponent
+                .plus(SignInModule())
+                .inject(this)
+
+        mViewModel = ViewModelProviders.of(this, appViewModelFactory).get(SigninViewModel::class.java)
+
+
+        mBinding = AutoClearedValue(this, databinding)
+        return mBinding.get()!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mBinding.get()?.let { binding ->
+            binding.btnLogin.setOnClickListener {
+                mViewModel.login()
+            }
+
+            binding.etEmail.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    mViewModel.onEmailTextChanged(s.toString())
+                    mViewModel.isEnableSignInButton()
+                }
+
+            })
+
+            binding.etPassword.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    mViewModel.onPasswordTextChanged(s.toString())
+                    mViewModel.isEnableSignInButton()
+                }
+            })
+
+            binding.ivClose.setOnClickListener {
+                activity?.finish()
+            }
+
+            binding.tvDontHaveAccount.setOnClickListener {
+                SignUpActivity.start(it.context)
+            }
+        }
+
+
+
+        viewModelObserve()
+    }
+
+    private fun viewModelObserve() {
+        mViewModel.btnLoginState.observe(this, Observer {
+            val btnLoginModel = it ?: return@Observer
+
+            mBinding.get()?.ivCheckedEmail?.let {
+                it.visibility = if (btnLoginModel.enableChecked) View.VISIBLE else View.GONE
+            }
+
+            if (btnLoginModel.isEnable) {
+                enableBtnSignIn()
+            } else {
+                disableBtnSignIn()
+            }
+
+            if (btnLoginModel.isClick) {
+                Toast.makeText(activity, "Btn Login CLick", Toast.LENGTH_SHORT)
+            }
+        })
+    }
+
+    private fun disableBtnSignIn() {
+        mBinding.get()?.let {
+            it.btnLogin.isEnabled = false
+            it.btnLogin.isClickable = false
+            it.btnLogin.isFocusable = false
+            it.btnLogin.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.gray))
+
+        }
+    }
+
+    private fun enableBtnSignIn() {
+        mBinding.get()?.let {
+            it.btnLogin.isEnabled = true
+            it.btnLogin.isClickable = true
+            it.btnLogin.isFocusable = true
+            it.btnLogin.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.primaryColor))
+
+        }
+    }
+
+
+
+
+}

@@ -49,7 +49,7 @@ class SignUpViewModel @Inject constructor(): BaseViewModel(){
     fun onEmailTextChanged(email: String) {
         mEmail = email
         isEmailValid()
-
+//        isEnableSignUpButton()
     }
 
     private fun isEmailValid() : Boolean {
@@ -69,7 +69,7 @@ class SignUpViewModel @Inject constructor(): BaseViewModel(){
     fun onPasswordChanged(pass: String ?= mPassword ) {
         mPassword = pass
         isPassValid()
-        isEnableSignUpButton()
+//        isEnableSignUpButton()
     }
 
     private fun isPassValid() : Boolean {
@@ -84,7 +84,7 @@ class SignUpViewModel @Inject constructor(): BaseViewModel(){
         }
      }
 
-    private fun isEnableSignUpButton() {
+     fun isEnableSignUpButton() {
         val isEmailPasswordEmpty = TextUtils.isEmpty(mEmail) || TextUtils.isEmpty(mPassword)
         val isEmailMet = isEmailValid()
         val isPasswordMet = isPassValid()

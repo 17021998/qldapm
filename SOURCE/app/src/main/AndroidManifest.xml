@@ -19,7 +19,7 @@
         android:hardwareAccelerated="true"
         >
         <activity
-            android:name=".View.SignUpActivity"
+            android:name=".View.SignInActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,6 +29,13 @@
             </intent-filter>
         </activity>
 
-    </application>
+        <activity
+            android:name=".View.SignUpActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
+            android:parentActivityName=".View.SignUpActivity"
+            android:screenOrientation="portrait"
 
+            android:windowSoftInputMode="adjustResize" />
+
+    </application>
 </manifest>
