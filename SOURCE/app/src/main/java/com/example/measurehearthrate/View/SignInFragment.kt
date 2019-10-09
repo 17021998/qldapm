@@ -15,10 +15,12 @@ import com.example.measurehearthrate.Base.BaseFragment
 import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Dagger.Module.SignInModule
 import com.example.measurehearthrate.Factory.AppViewModelFactory
+import com.example.measurehearthrate.Helper.LanguagesHelper
 import com.example.measurehearthrate.R
 import com.example.measurehearthrate.Utils.AutoClearedValue
 import com.example.measurehearthrate.ViewModel.SigninViewModel
 import com.example.measurehearthrate.databinding.FragmentSigninBinding
+import kotlinx.android.synthetic.main.fragment_signin.*
 import javax.inject.Inject
 
 class SignInFragment : BaseFragment() {
@@ -50,9 +52,6 @@ class SignInFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mBinding.get()?.let { binding ->
-            binding.btnLogin.setOnClickListener {
-                mViewModel.login()
-            }
 
             binding.etEmail.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
@@ -88,6 +87,10 @@ class SignInFragment : BaseFragment() {
             binding.tvDontHaveAccount.setOnClickListener {
                 SignUpActivity.start(it.context)
             }
+
+            binding.btnLogin.setOnClickListener {
+                mViewModel.login(et_email.text.toString(), et_password.text.toString())
+            }
         }
 
 
@@ -109,8 +112,23 @@ class SignInFragment : BaseFragment() {
                 disableBtnSignIn()
             }
 
-            if (btnLoginModel.isClick) {
-                Toast.makeText(activity, "Btn Login CLick", Toast.LENGTH_SHORT)
+            if (btnLoginModel.isLoginSuccess != null) {
+                if (btnLoginModel.isLoginSuccess!!) {
+                    activity?.let {
+                        MainActivity.start(it)
+                        it.finish()
+                    }
+                } else if (btnLoginModel.wrongEmail){
+                    mBinding.get()?.let {
+                        it.inputEmail.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__EmailIsNotRegister)
+                        it.inputPassword.error = ""
+                    }
+                } else {
+                    mBinding.get()?.let {
+                        it.inputEmail.error = ""
+                        it.inputPassword.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__PasswordIncorrect)
+                    }
+                }
             }
         })
     }
@@ -134,8 +152,6 @@ class SignInFragment : BaseFragment() {
 
         }
     }
-
-
 
 
 }

@@ -1,10 +1,9 @@
 package com.example.measurehearthrate.Helper
 
 import com.example.measurehearthrate.Base.MyApplication
-import com.example.measurehearthrate.Database.UserDatabase
 import com.example.measurehearthrate.Helper.AuthenticationEmailExistingHelper.*
 import com.example.measurehearthrate.Utils.CoroutineUsecase
-import com.example.measurehearthrate.Utils.NetworkCode
+import com.example.measurehearthrate.Utils.ResponseCode
 import javax.inject.Inject
 
 class AuthenticationEmailExistingHelper @Inject constructor() :
@@ -13,7 +12,7 @@ class AuthenticationEmailExistingHelper @Inject constructor() :
     private var userDatabase = MyApplication.userDatabase
 
     override suspend fun run(requestValues: RequestValues?): Any? {
-        if(requestValues == null) return ResponseError(NetworkCode.UNKNOWN_ERROR, "")
+        if(requestValues == null) return ResponseError(ResponseCode.UNKNOWN_ERROR, "")
 
         val response = userDatabase.userDAO().getUserByEmail(requestValues.email)
 

@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Measure Hearth Rate</string>
+    <string name="action_settings">Settings</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Thesis - 15CNTN</string>
     <string name="nav_header_subtitle">1512398 - 1512113</string>
     <string name="nav_header_desc">Thesis - 15CNTN</string>
-    <string name="action_settings">Settings</string>
+
+
     <string name="CreateAccount_Input__Password">Password</string>
     <string name="CreateAccount_Input__Email">Email</string>
     <string name="CreateAccount_Text__OrSignUpVia">Or sign up via</string>
@@ -35,6 +38,8 @@
     <string name="Login_CTA__Forgot">Forgot</string>
     <string name="Login_Text__DontHaveAnAccount">Don\'t have an account?</string>
     <string name="Login_Text__OrLogInVia">Or log in via</string>
+    <string name="Login_Text__PasswordIncorrect">Password incorrect</string>
+    <string name="Login_Text__EmailIsNotRegister">Email is not register</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

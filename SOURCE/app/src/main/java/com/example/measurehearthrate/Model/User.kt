@@ -36,6 +36,7 @@ data class User(
 
 
 
+
     constructor(mFirstName: String, mLastName: String, mUsername: String, mEmail: String, mPassword: String, mGender: Boolean?, mPhone: String?, mBirthday: String?) : this() {
         this.mFirstName = mFirstName
         this.mLastName = mLastName
@@ -78,6 +79,8 @@ data class User(
             return arrayOfNulls(size)
         }
     }
+
+
 
 
 }
