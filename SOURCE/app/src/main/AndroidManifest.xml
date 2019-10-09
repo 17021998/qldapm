@@ -21,7 +21,7 @@
         >
         <activity
             android:name=".View.SignInActivity"
-            android:label=""
+            android:label="HeartBeat"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +42,14 @@
             android:name=".View.ProfileSetupActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
             android:parentActivityName=".View.ProfileSetupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".View.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
+            android:parentActivityName=".View.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />

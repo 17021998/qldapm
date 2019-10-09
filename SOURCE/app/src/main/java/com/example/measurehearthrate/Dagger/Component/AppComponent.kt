@@ -35,4 +35,7 @@ interface AppComponent  {
     @NotNull
     fun plus(signInModule: SignInModule): SignInComponent
 
+    @NotNull
+    fun plus(profileSetupModule: ProfileSetupModule): ProfileSetupComponent
+
 }

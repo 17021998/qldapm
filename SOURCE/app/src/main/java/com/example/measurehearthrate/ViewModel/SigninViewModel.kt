@@ -19,7 +19,6 @@ class SigninViewModel @Inject constructor(): BaseViewModel() {
         get() = mBtnLoginState
 
     override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun login() {

@@ -3,10 +3,15 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: "kotlin-kapt"
 
+androidExtensions {
+    experimental = true
+}
+
 android {
     configurations.all {
 //        resolutionStrategy.force 'libs/JTransforms-3.1-with-dependencies.jar'
     }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.measurehearthrate"

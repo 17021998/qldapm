@@ -26,6 +26,7 @@
     <string name="ProfileSetup_Label__Male">MALE</string>
     <string name="ProfileSetup_Label__Female">FEMALE</string>
     <string name="ProfileSetup_Label__Other">OTHER</string>
+    <string name="ProfileSetup_Label__SkipThisStep">Skip this step</string>
     <string name="ProfileSetup_CTA__CreateAccount">CREATE ACCOUNT</string>
     <string name="ProfileSetup_Text__IAgreeToTheAHreftermofuseurlterms">I agree to the terms, especially to the potential collection of health-related data concerning sleep and activity.</string>
     <string name="ProfileSetup_Text__AllowUsToGatherDataUsage">Allow us to gather data usage to improve your experience over time.</string>

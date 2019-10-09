@@ -34,6 +34,9 @@ class SignUpFragment : BaseFragment(), SignupContracts {
     private lateinit var mViewModel: SignUpViewModel
     private lateinit var mBinding: AutoClearedValue<FragmentSignupBinding>
 
+    var email : String = ""
+    var pass : String = ""
+
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
 
@@ -59,8 +62,8 @@ class SignUpFragment : BaseFragment(), SignupContracts {
         mBinding.get()?.let { binding ->
 
             binding.btnSignup.setOnClickListener {
-                val email = binding.etEmail.text.toString()
-                val pass = binding.etPassword.text.toString()
+                email = binding.etEmail.text.toString()
+                pass = binding.etPassword.text.toString()
                 mViewModel.register(email,pass) }
 
 
