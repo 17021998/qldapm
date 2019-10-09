@@ -58,7 +58,10 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
         mBinding.get()?.let { binding ->
 
-            binding.btnSignup.setOnClickListener { mViewModel.register() }
+            binding.btnSignup.setOnClickListener {
+                val email = binding.etEmail.text.toString()
+                val pass = binding.etPassword.text.toString()
+                mViewModel.register(email,pass) }
 
 
             binding.etEmail.addTextChangedListener(object : TextWatcher {
@@ -153,8 +156,12 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
         mViewModel.btnSignUpState.observe(this, Observer {
             val btnSignUpModel = it?: return@Observer
-            if (btnSignUpModel.onClick) {
-                Toast.makeText(activity, "onClick BtnSignUp", Toast.LENGTH_SHORT).show()
+            if (btnSignUpModel.isSignUpSuccess) {
+                Toast.makeText(activity,"SignUp Sucessful",Toast.LENGTH_SHORT).show()
+                activity?.let {
+                    ProfileSetupActivity.start(it)
+                    it.finish()
+                }
             }
 
             if(btnSignUpModel.isEnable) {

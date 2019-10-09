@@ -1,26 +1,25 @@
 package com.example.measurehearthrate.Model
 
-import android.net.Uri
-import com.example.measurehearthrate.Helper.DateHelper
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class User {
 
-    //var mBirthday: Date = SimpleDateFormat(DateHelper.FORMAT_SHORT_DATE).parse(DateHelper.getCurrentDay())
-
-    var mAvatar: Uri?= null
-    var mFirstName: String = ""
-    var mLastName: String = ""
-    var mUsername: String = ""
-    var mEmail: String =""
-    var mPassword: String = ""
-    var mGender: Boolean ?=null
-    var mPhone: String ?= null
-    var mBirthday: Date? =null
-
-    constructor(mFirstName: String, mLastName: String, mUsername: String, mEmail: String, mPassword: String, mGender: Boolean?, mPhone: String?, mBirthday: Date?) {
+@Entity(tableName = "USER")
+data class User(
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "id") var mId: Long = 0,
+        @ColumnInfo(name = "email") var mEmail: String = "",
+        @ColumnInfo(name = "password")var mPassword: String = "",
+        @ColumnInfo(name = "avatar")var mAvatar: String? = null,
+        @ColumnInfo(name = "firstname")var mFirstName: String = "",
+        @ColumnInfo(name = "lastname")var mLastName: String = "",
+        @ColumnInfo(name = "username")var mUsername: String = "",
+        @ColumnInfo(name = "gender")var mGender: Boolean? = null,
+        @ColumnInfo(name = "phone")var mPhone: String? = null,
+        @ColumnInfo(name = "birthday")var mBirthday: String? = null
+) {
+    constructor(mFirstName: String, mLastName: String, mUsername: String, mEmail: String, mPassword: String, mGender: Boolean?, mPhone: String?, mBirthday: String?) : this() {
         this.mFirstName = mFirstName
         this.mLastName = mLastName
         this.mUsername = mUsername
@@ -29,6 +28,11 @@ class User {
         this.mGender = mGender
         this.mPhone = mPhone
         this.mBirthday = mBirthday
+    }
+
+    constructor(mEmail: String, mPassword: String) : this() {
+        this.mEmail = mEmail
+        this.mPassword = mPassword
     }
 
 
