@@ -26,9 +26,16 @@ import javax.inject.Inject
 
 class SignUpFragment : BaseFragment(), SignupContracts {
 
+    override fun register() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
     private lateinit var mViewModel: SignUpViewModel
     private lateinit var mBinding: AutoClearedValue<FragmentSignupBinding>
+
+    var email : String = ""
+    var pass : String = ""
 
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
@@ -42,7 +49,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
         mViewModel = ViewModelProviders.of(this@SignUpFragment, viewModelFactory).get(SignUpViewModel::class.java)
 
-        ViewModelObserve()
+        viewModelObserve()
 
         mBinding = AutoClearedValue(this, dataBinding)
         return mBinding.get()!!.root
@@ -54,7 +61,10 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
         mBinding.get()?.let { binding ->
 
-            binding.btnSignup.setOnClickListener { mViewModel.register() }
+            binding.btnSignup.setOnClickListener {
+                email = binding.etEmail.text.toString()
+                pass = binding.etPassword.text.toString()
+                mViewModel.register(email,pass) }
 
 
             binding.etEmail.addTextChangedListener(object : TextWatcher {
@@ -62,11 +72,11 @@ class SignUpFragment : BaseFragment(), SignupContracts {
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                    mViewModel.onPasswordChanged(s.toString())
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     mViewModel.onEmailTextChanged(s.toString())
+                    mViewModel.isEnableSignUpButton()
                 }
 
             })
@@ -82,6 +92,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     Log.d(TAG,"Password onTextChanged: $s")
                     mViewModel.onPasswordChanged(s.toString())
+                    mViewModel.isEnableSignUpButton()
                 }
 
             })
@@ -101,30 +112,16 @@ class SignUpFragment : BaseFragment(), SignupContracts {
                 activity?.finish()
             }
 
+            binding.tvHaveAccount.setOnClickListener {
+                SignInActivity.start(it.context)
+                activity?.finish()
+            }
+
 
         }
     }
 
-    private fun enableSignUpButton() {
-        mBinding.get()?.let {
-            it.btnSignup.isEnabled = true
-            it.btnSignup.isClickable = true
-            it.btnSignup.isFocusable = true
-            it.btnSignup.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.primaryColor))
-
-        }
-    }
-
-    private fun disableSignUpButton() {
-        mBinding.get()?.let {
-            it.btnSignup.isEnabled = false
-            it.btnSignup.isClickable = false
-            it.btnSignup.isFocusable = false
-
-        }
-    }
-
-    private fun ViewModelObserve() {
+    private fun viewModelObserve() {
         mViewModel.passwordState.observe(this, Observer {
             val passModel = it?:return@Observer
             mBinding.get()?.let {
@@ -162,8 +159,12 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
         mViewModel.btnSignUpState.observe(this, Observer {
             val btnSignUpModel = it?: return@Observer
-            if (btnSignUpModel.onClick) {
-                Toast.makeText(activity, "onClick BtnSignUp", Toast.LENGTH_SHORT).show()
+            if (btnSignUpModel.isSignUpSuccess) {
+                Toast.makeText(activity,"SignUp Sucessful",Toast.LENGTH_SHORT).show()
+                activity?.let {
+                    ProfileSetupActivity.start(it)
+                    it.finish()
+                }
             }
 
             if(btnSignUpModel.isEnable) {
@@ -175,6 +176,26 @@ class SignUpFragment : BaseFragment(), SignupContracts {
         })
 
 
+    }
+
+    private fun enableSignUpButton() {
+        mBinding.get()?.let {
+            it.btnSignup.isEnabled = true
+            it.btnSignup.isClickable = true
+            it.btnSignup.isFocusable = true
+            it.btnSignup.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.primaryColor))
+
+        }
+    }
+
+    private fun disableSignUpButton() {
+        mBinding.get()?.let {
+            it.btnSignup.isEnabled = false
+            it.btnSignup.isClickable = false
+            it.btnSignup.isFocusable = false
+            it.btnSignup.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.gray))
+
+        }
     }
 
     override fun enableSignup() {

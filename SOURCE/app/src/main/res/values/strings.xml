@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Measure Hearth Rate</string>
+    <string name="action_settings">Settings</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Thesis - 15CNTN</string>
     <string name="nav_header_subtitle">1512398 - 1512113</string>
     <string name="nav_header_desc">Thesis - 15CNTN</string>
-    <string name="action_settings">Settings</string>
+
+
     <string name="CreateAccount_Input__Password">Password</string>
     <string name="CreateAccount_Input__Email">Email</string>
     <string name="CreateAccount_Text__OrSignUpVia">Or sign up via</string>
@@ -17,12 +20,26 @@
     <string name="SignUp_PasswordInput_Text__ContainsBothLettersNumbers">contains both letters &amp; numbers</string>
     <string name="SignUp_PasswordInput_Text__Min7Characters">min. 7 characters</string>
     <string name="SignUp_InputError_Text__InvalidEmailAddress">Invalid email address.</string>
+    <string name="SignUp_EmailInUse_Text__ThisEmailIsAlreadyInUse">This email is already in use.</string>
+    <string name="ProfileSetup_Title__TellUsAboutYourself">Tell us about yourself</string>
+    <string name="ProfileSetup_List__FirstName">First Name</string>
+    <string name="ProfileSetup_List__LastName">Last Name</string>
+    <string name="ProfileSetup_List__DateOfBirth">Date of Birth</string>
+    <string name="ProfileSetup_List__GenderOptional">Gender (optional)</string>
+    <string name="ProfileSetup_Label__Male">MALE</string>
+    <string name="ProfileSetup_Label__Female">FEMALE</string>
+    <string name="ProfileSetup_Label__Other">OTHER</string>
+    <string name="ProfileSetup_Label__SkipThisStep">Skip this step</string>
+    <string name="ProfileSetup_CTA__CreateAccount">CREATE ACCOUNT</string>
+    <string name="ProfileSetup_Text__IAgreeToTheAHreftermofuseurlterms">I agree to the terms, especially to the potential collection of health-related data concerning sleep and activity.</string>
+    <string name="ProfileSetup_Text__AllowUsToGatherDataUsage">Allow us to gather data usage to improve your experience over time.</string>
+
 
     <string name="Login_CTA__Forgot">Forgot</string>
     <string name="Login_Text__DontHaveAnAccount">Don\'t have an account?</string>
     <string name="Login_Text__OrLogInVia">Or log in via</string>
-
-
+    <string name="Login_Text__PasswordIncorrect">Password incorrect</string>
+    <string name="Login_Text__EmailIsNotRegister">Email is not register</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

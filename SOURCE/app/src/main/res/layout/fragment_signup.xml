@@ -261,6 +261,7 @@
                     android:text="@string/CreateAccount_Title__SignUp"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/dp20"
+                    android:background="@color/gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"

@@ -12,4 +12,7 @@ class AppModule internal constructor(val mApplication: MyApplication) {
     fun provideApplication(): MyApplication {
         return mApplication
     }
+
+
+
 }

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:src="@drawable/ic_close_button"
+            android:padding="@dimen/dp16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp18"
+            android:textStyle="italic"
+            android:text="@string/ProfileSetup_Label__SkipThisStep"
+            android:layout_margin="@dimen/dp12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp60"
+            android:text="@string/ProfileSetup_Title__TellUsAboutYourself"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/dp20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/sv_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp12"
+            app:layout_constraintBottom_toTopOf="@+id/fb_create_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            android:overScrollMode="never"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:textColorHint="@color/placeholderText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/CreateAccount_Input__Email"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="@dimen/dp10"
+                        android:paddingEnd="@dimen/dp46" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_first_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/ProfileSetup_List__FirstName"
+                        android:textSize="16sp"
+                        android:inputType="textPersonName"
+                        android:paddingStart="@dimen/dp10"
+                        android:paddingEnd="@dimen/dp46" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/iv_checked_first_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:src="@drawable/ic_check_green"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/input_first_name"
+                    app:layout_constraintEnd_toEndOf="@+id/input_first_name"
+                    app:layout_constraintTop_toTopOf="@+id/input_first_name" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_last_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp24"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="0dp"
+                    app:boxCornerRadiusTopEnd="0dp"
+                    app:boxCornerRadiusTopStart="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_first_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/ProfileSetup_List__LastName"
+                        android:textSize="16sp"
+                        android:inputType="textPersonName"
+                        android:paddingStart="@dimen/dp10"
+                        android:paddingEnd="@dimen/dp46" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/iv_checked_last_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:src="@drawable/ic_check_green"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/input_last_name"
+                    app:layout_constraintEnd_toEndOf="@+id/input_last_name"
+                    app:layout_constraintTop_toTopOf="@+id/input_last_name" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_birthday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:longClickable="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_last_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false"
+                        android:hint="@string/ProfileSetup_List__DateOfBirth"
+                        android:inputType="text"
+                        android:longClickable="false"
+                        android:paddingStart="@dimen/dp10"
+                        android:paddingEnd="0dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/iv_checked_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:src="@drawable/ic_check_green"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/input_birthday"
+                    app:layout_constraintEnd_toEndOf="@+id/input_birthday"
+                    app:layout_constraintTop_toTopOf="@+id/input_birthday" />
+
+                <TextView
+                    android:id="@+id/ftv_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp28"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:text="@string/ProfileSetup_List__GenderOptional"
+                    android:textColor="@color/primaryText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_birthday"
+                    app:layout_goneMarginTop="@dimen/dp40" />
+
+                <Button
+                    android:id="@+id/fb_male"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp46"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:background="@drawable/background_border_white_color"
+                    android:text="@string/ProfileSetup_Label__Male"
+                    app:layout_constraintEnd_toStartOf="@+id/fb_female"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ftv_gender"
+                     />
+
+                <Button
+                    android:id="@+id/fb_female"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp46"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:background="@drawable/background_border_white_color"
+                    android:text="@string/ProfileSetup_Label__Female"
+                    app:layout_constraintBottom_toBottomOf="@+id/fb_male"
+                    app:layout_constraintEnd_toStartOf="@+id/fb_other"
+                    app:layout_constraintStart_toEndOf="@+id/fb_male"
+                    app:layout_constraintTop_toTopOf="@+id/fb_male" />
+
+                <Button
+                    android:id="@+id/fb_other"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp46"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:background="@drawable/background_border_white_color"
+                    android:text="@string/ProfileSetup_Label__Other"
+                    app:layout_constraintBottom_toBottomOf="@+id/fb_female"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fb_female"
+                    app:layout_constraintTop_toTopOf="@+id/fb_male" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_terms_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:backgroundTint="@color/activeColorPrimary"
+                    android:buttonTint="@color/activeColorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/ftv_terms_service"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ftv_terms_service" />
+
+                <TextView
+                    android:id="@+id/ftv_terms_service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:gravity="start"
+                    android:minHeight="@dimen/dp24"
+                    android:text="@string/ProfileSetup_Text__IAgreeToTheAHreftermofuseurlterms"
+                    android:textColor="@color/primaryText"
+                    app:layout_constraintBottom_toTopOf="@+id/ftv_allow_gather_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cb_terms_service"
+                    app:layout_constraintTop_toBottomOf="@+id/fb_female" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_collect_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:backgroundTint="@color/activeColorPrimary"
+                    android:buttonTint="@color/activeColorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/ftv_allow_gather_data"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ftv_terms_service"
+                    app:layout_constraintTop_toTopOf="@+id/ftv_allow_gather_data" />
+
+                <TextView
+                    android:id="@+id/ftv_allow_gather_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:gravity="start"
+                    android:minHeight="@dimen/dp24"
+                    android:text="@string/ProfileSetup_Text__AllowUsToGatherDataUsage"
+                    android:textColor="@color/primaryText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cb_collect_data"
+                    app:layout_constraintTop_toBottomOf="@+id/ftv_terms_service" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/fb_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp12"
+            android:layout_marginBottom="@dimen/dp12"
+            android:padding="@dimen/dp10"
+            android:textColor="@color/colorWhite"
+            android:background="@color/gray"
+            android:textSize="16dp"
+            android:enabled="false"
+            android:text="@string/ProfileSetup_CTA__CreateAccount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

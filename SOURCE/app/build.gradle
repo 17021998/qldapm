@@ -3,10 +3,15 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: "kotlin-kapt"
 
+androidExtensions {
+    experimental = true
+}
+
 android {
     configurations.all {
 //        resolutionStrategy.force 'libs/JTransforms-3.1-with-dependencies.jar'
     }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.measurehearthrate"
@@ -74,7 +79,26 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
 
+    /**
+     * Retrofit
+     */
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
+    /**
+     * Room
+     */
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+
+    /**
+     * Coroutine
+     */
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"
 
 
     implementation files('libs/iirj-1.1.jar')
@@ -83,7 +107,7 @@ dependencies {
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation files('libs/JTransforms-3.1-with-dependencies.jar')
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.cookingfox:android-app-lifecycle:0.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'

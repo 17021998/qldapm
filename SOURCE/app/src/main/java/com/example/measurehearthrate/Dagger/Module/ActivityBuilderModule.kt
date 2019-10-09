@@ -6,8 +6,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityBuilderModule {
-    @ContributesAndroidInjector (
-            modules = [SignUpModule::class]
-    )
+
     abstract fun contributeSignUpFragment() : SignUpFragment
 }

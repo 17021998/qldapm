@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -96,6 +97,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context,MainActivity.class));
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // load camera
+
+    }
+
     // Filter
     private Spinner filterState;
     private ArrayList<String> listStateLabel;
@@ -662,6 +676,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Hearth Rate Calc
@@ -861,9 +880,9 @@ public class MainActivity extends AppCompatActivity
         tcheck = (TextView) findViewById(R.id.check);
 
         // load camera
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-        }
+//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+//        }
         camera = (Camera) Camera.open();
         InitView();
         startBackgroundThread();

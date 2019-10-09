@@ -4,14 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.measurehearthrate.Base.BaseActivity
+import com.example.measurehearthrate.Interface.SignInContracts
 import com.example.measurehearthrate.R
 
-class SignUpActivity : BaseActivity() {
+class SignInActivity : BaseActivity(), SignInContracts {
 
     companion object {
         @JvmStatic
         fun start(context: Context) {
-            context.startActivity(Intent(context, SignUpActivity::class.java))
+            context.startActivity(Intent(context, SignInActivity::class.java))
         }
     }
 
@@ -19,14 +20,11 @@ class SignUpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.base_activity)
 
-        var fragment = supportFragmentManager.findFragmentById(R.id.content) as SignUpFragment?
+        var fragment = supportFragmentManager.findFragmentById(R.id.content) as SignInFragment?
 
         if(fragment == null) {
-            fragment = SignUpFragment.newInstance()
+            fragment = SignInFragment.newInstance()
             addFragment(fragment,TAG,R.id.content)
         }
-
-
-
     }
 }

@@ -16,7 +16,7 @@ class LanguagesHelper {
             val resourceName: String
 
             try {
-                resourceName = context.resources.getString(R.string.SignUp_InputError_Text__InvalidEmailAddress)
+                resourceName = context.resources.getString(resourceId)
             } catch (e: Resources.NotFoundException) {
                 return ""
             }

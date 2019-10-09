@@ -8,6 +8,7 @@
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.flash"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".Base.MyApplication"
         android:allowBackup="true"
@@ -19,8 +20,8 @@
         android:hardwareAccelerated="true"
         >
         <activity
-            android:name=".View.SignUpActivity"
-            android:label=""
+            android:name=".View.SignInActivity"
+            android:label="HeartBeat"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +30,29 @@
             </intent-filter>
         </activity>
 
-    </application>
+        <activity
+            android:name=".View.SignUpActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
+            android:parentActivityName=".View.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".View.ProfileSetupActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
+            android:parentActivityName=".View.ProfileSetupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".View.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|navigation"
+            android:parentActivityName=".View.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+    </application>
 </manifest>
