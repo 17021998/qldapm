@@ -1,6 +1,7 @@
 package com.example.measurehearthrate.ViewModel
 
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Helper.ValidationHelper
@@ -12,6 +13,7 @@ import com.example.measurehearthrate.Helper.AuthenticationEmailExistingHelper
 import com.example.measurehearthrate.Helper.LanguagesHelper
 import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.Utils.CoroutineUsecase
+import com.example.measurehearthrate.Utils.MD5Algorithm
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -50,7 +52,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         isEnableSignUpButton()
     }
 
-    fun register(email: String, pass: String?) {
+    fun register(email: String, pass: String) {
 
         mAuthenticationEmailExisting.executeUsecase(AuthenticationEmailExistingHelper.RequestValues(email),
                 object : CoroutineUsecase.UseCaseCallBack<AuthenticationEmailExistingHelper.ResponseValue, AuthenticationEmailExistingHelper.ResponseError> {
@@ -61,9 +63,11 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
                             }
                             false -> {
                                 mEmail = email
-                                mPassword = pass
+                                mPassword = MD5Algorithm.md5Encrypt(pass)
+                                Log.d(TAG,"SignupViewModel - Password encrypted: $mPassword")
 
                                 bgScope.launch {
+
                                     userDatabase.userDAO().insertUser(User(mEmail!!, mPassword!!))
                                 }
                                 emitBtnSignUpState(true, true)
