@@ -15,11 +15,10 @@ import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.Utils.CoroutineUsecase
 import com.example.measurehearthrate.Utils.MD5Algorithm
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class SignUpViewModel @Inject constructor() : BaseViewModel() {
+class SignUpViewModel @Inject constructor(private val userDatabase: UserDatabase) : BaseViewModel() {
 
 
     private var mEmail: String? = null
@@ -28,7 +27,6 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     private var mEmailState: MutableLiveData<UiEmailWrapper> = MutableLiveData()
     private var mPasswordState: MutableLiveData<UiPassWordWrapper> = MutableLiveData()
     private var mSignUpButtonState: MutableLiveData<UiSignUpButtonWrapper> = MutableLiveData()
-    private lateinit var userDatabase: UserDatabase
 
     @Inject
     lateinit var mAuthenticationEmailExisting: AuthenticationEmailExistingHelper
@@ -48,7 +46,6 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     }
 
     override fun start() {
-        userDatabase = MyApplication.userDatabase
         isEnableSignUpButton()
     }
 
@@ -66,10 +63,6 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
                                 mPassword = MD5Algorithm.md5Encrypt(pass)
                                 Log.d(TAG,"SignupViewModel - Password encrypted: $mPassword")
 
-                                bgScope.launch {
-
-                                    userDatabase.userDAO().insertUser(User(mEmail!!, mPassword!!))
-                                }
                                 emitBtnSignUpState(true, true)
                             }
 
@@ -86,7 +79,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     fun onEmailTextChanged(email: String) {
         mEmail = email
         isEmailValid()
-//        isEnableSignUpButton()
+        isEnableSignUpButton()
     }
 
     private fun isEmailValid(): Boolean {
@@ -106,7 +99,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     fun onPasswordChanged(pass: String? = mPassword) {
         mPassword = pass
         isPassValid()
-//        isEnableSignUpButton()
+        isEnableSignUpButton()
     }
 
     private fun isPassValid(): Boolean {

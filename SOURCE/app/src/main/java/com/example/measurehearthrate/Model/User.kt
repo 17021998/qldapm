@@ -11,40 +11,30 @@ import androidx.room.PrimaryKey
 data class User(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "id") var mId: Long = 0,
-        @ColumnInfo(name = "email") var mEmail: String = "",
-        @ColumnInfo(name = "password") var mPassword: String = "",
+        @ColumnInfo(name = "email") var mEmail: String ?= null,
+        @ColumnInfo(name = "password") var mPassword: String ?= null,
         @ColumnInfo(name = "avatar") var mAvatar: String? = null,
-        @ColumnInfo(name = "firstname") var mFirstName: String = "",
-        @ColumnInfo(name = "lastname") var mLastName: String = "",
-        @ColumnInfo(name = "username") var mUsername: String = "",
-        @ColumnInfo(name = "gender") var mGender: Boolean? = null,
-        @ColumnInfo(name = "phone") var mPhone: String? = null,
+        @ColumnInfo(name = "firstname") var mFirstName: String ?= null,
+        @ColumnInfo(name = "lastname") var mLastName: String ?= null,
+        @ColumnInfo(name = "gender") var mGender: String? = null,
         @ColumnInfo(name = "birthday") var mBirthday: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readLong(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readString(),
-            parcel.readString()) {
-    }
+            mId = parcel.readLong(),
+            mEmail = parcel.readString(),
+            mPassword = parcel.readString(),
+            mAvatar = parcel.readString(),
+            mFirstName = parcel.readString(),
+            mLastName = parcel.readString(),
+            mGender = parcel.readString(),
+            mBirthday = parcel.readString())
 
-
-
-
-    constructor(mFirstName: String, mLastName: String, mUsername: String, mEmail: String, mPassword: String, mGender: Boolean?, mPhone: String?, mBirthday: String?) : this() {
+    constructor(mEmail: String, mPassword: String, mFirstName: String, mLastName: String,  mGender: String, mBirthday: String) : this() {
         this.mFirstName = mFirstName
         this.mLastName = mLastName
-        this.mUsername = mUsername
         this.mEmail = mEmail
         this.mPassword = mPassword
         this.mGender = mGender
-        this.mPhone = mPhone
         this.mBirthday = mBirthday
     }
 
@@ -60,9 +50,7 @@ data class User(
         parcel.writeString(mAvatar)
         parcel.writeString(mFirstName)
         parcel.writeString(mLastName)
-        parcel.writeString(mUsername)
-        parcel.writeValue(mGender)
-        parcel.writeString(mPhone)
+        parcel.writeString(mGender)
         parcel.writeString(mBirthday)
     }
 

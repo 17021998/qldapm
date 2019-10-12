@@ -18,8 +18,10 @@ import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Dagger.Module.SignUpModule
 import com.example.measurehearthrate.Factory.AppViewModelFactory
 import com.example.measurehearthrate.Interface.SignupContracts
+import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.R
 import com.example.measurehearthrate.Utils.AutoClearedValue
+import com.example.measurehearthrate.Utils.MD5Algorithm
 import com.example.measurehearthrate.ViewModel.SignUpViewModel
 import com.example.measurehearthrate.databinding.FragmentSignupBinding
 import javax.inject.Inject
@@ -76,7 +78,6 @@ class SignUpFragment : BaseFragment(), SignupContracts {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     mViewModel.onEmailTextChanged(s.toString())
-                    mViewModel.isEnableSignUpButton()
                 }
 
             })
@@ -90,9 +91,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    Log.d(TAG,"Password onTextChanged: $s")
                     mViewModel.onPasswordChanged(s.toString())
-                    mViewModel.isEnableSignUpButton()
                 }
 
             })
@@ -161,13 +160,16 @@ class SignUpFragment : BaseFragment(), SignupContracts {
             val btnSignUpModel = it?: return@Observer
             if (btnSignUpModel.isSignUpSuccess) {
                 Toast.makeText(activity,"SignUp Sucessful",Toast.LENGTH_SHORT).show()
+                val encryptedPass = MD5Algorithm.md5Encrypt(pass)
+                val user = User(email,encryptedPass)
                 activity?.let {
-                    ProfileSetupActivity.start(it)
+                    ProfileSetupActivity.start(it,user)
                     it.finish()
                 }
             }
 
             if(btnSignUpModel.isEnable) {
+
                 enableSignUpButton()
             }
             else {
@@ -183,8 +185,7 @@ class SignUpFragment : BaseFragment(), SignupContracts {
             it.btnSignup.isEnabled = true
             it.btnSignup.isClickable = true
             it.btnSignup.isFocusable = true
-            it.btnSignup.setBackgroundColor(MyApplication.instance.resources.getColor(R.color.primaryColor))
-
+            it.btnSignup.setBackgroundColor(MyApplication.instance.getColor(R.color.primaryColor))
         }
     }
 
