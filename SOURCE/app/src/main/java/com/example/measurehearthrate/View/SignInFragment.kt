@@ -78,10 +78,6 @@ class SignInFragment : BaseFragment() {
                 }
             })
 
-            binding.ivClose.setOnClickListener {
-                activity?.finish()
-            }
-
             binding.tvDontHaveAccount.setOnClickListener {
                 SignUpActivity.start(it.context)
             }

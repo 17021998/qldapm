@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
@@ -18,18 +18,6 @@
             android:padding="@dimen/dp16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dp18"
-            android:textStyle="italic"
-            android:text="@string/ProfileSetup_Label__SkipThisStep"
-            android:layout_margin="@dimen/dp12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
 
         <TextView
@@ -52,16 +40,18 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dp20"
             android:layout_marginBottom="@dimen/dp12"
-            app:layout_constraintBottom_toTopOf="@+id/fb_create_account"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@+id/btn_create_account"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            android:overScrollMode="never"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                >
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_email"
@@ -78,14 +68,13 @@
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/CreateAccount_Input__Email"
-                        android:textSize="16sp"
                         android:enabled="false"
+                        android:hint="@string/CreateAccount_Input__Email"
                         android:inputType="textEmailAddress"
                         android:paddingStart="@dimen/dp10"
-                        android:paddingEnd="@dimen/dp46" />
+                        android:paddingEnd="@dimen/dp46"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_first_name"
@@ -94,6 +83,7 @@
                     android:layout_marginStart="@dimen/dp24"
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp24"
+                    android:focusedByDefault="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/input_email">
@@ -103,10 +93,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/ProfileSetup_List__FirstName"
-                        android:textSize="16sp"
                         android:inputType="textPersonName"
                         android:paddingStart="@dimen/dp10"
-                        android:paddingEnd="@dimen/dp46" />
+                        android:paddingEnd="@dimen/dp46"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -140,10 +130,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/ProfileSetup_List__LastName"
-                        android:textSize="16sp"
                         android:inputType="textPersonName"
                         android:paddingStart="@dimen/dp10"
-                        android:paddingEnd="@dimen/dp46" />
+                        android:paddingEnd="@dimen/dp46"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -181,17 +171,6 @@
                         android:paddingEnd="0dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/iv_checked_birthday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp16"
-                    android:src="@drawable/ic_check_green"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/input_birthday"
-                    app:layout_constraintEnd_toEndOf="@+id/input_birthday"
-                    app:layout_constraintTop_toTopOf="@+id/input_birthday" />
-
                 <TextView
                     android:id="@+id/ftv_gender"
                     android:layout_width="0dp"
@@ -206,57 +185,48 @@
                     app:layout_goneMarginTop="@dimen/dp40" />
 
                 <Button
-                    android:id="@+id/fb_male"
+                    android:id="@+id/btn_male"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp46"
+                    android:layout_height="@dimen/dp40"
                     android:layout_marginStart="@dimen/dp24"
                     android:layout_marginTop="@dimen/dp12"
-                    android:background="@drawable/background_border_white_color"
+                    android:background="@drawable/background_disable"
                     android:text="@string/ProfileSetup_Label__Male"
-                    app:layout_constraintEnd_toStartOf="@+id/fb_female"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_female"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ftv_gender"
-                     />
+                    app:layout_constraintTop_toBottomOf="@+id/ftv_gender" />
 
                 <Button
-                    android:id="@+id/fb_female"
+                    android:id="@+id/btn_female"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp46"
+                    android:layout_height="@dimen/dp40"
                     android:layout_marginStart="@dimen/dp16"
-                    android:background="@drawable/background_border_white_color"
+                    android:background="@drawable/background_disable"
                     android:text="@string/ProfileSetup_Label__Female"
-                    app:layout_constraintBottom_toBottomOf="@+id/fb_male"
-                    app:layout_constraintEnd_toStartOf="@+id/fb_other"
-                    app:layout_constraintStart_toEndOf="@+id/fb_male"
-                    app:layout_constraintTop_toTopOf="@+id/fb_male" />
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_male"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_other"
+                    app:layout_constraintStart_toEndOf="@+id/btn_male"
+                    app:layout_constraintTop_toTopOf="@+id/btn_male" />
 
                 <Button
-                    android:id="@+id/fb_other"
+                    android:id="@+id/btn_other"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp46"
+                    android:layout_height="@dimen/dp40"
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginEnd="@dimen/dp24"
-                    android:background="@drawable/background_border_white_color"
+                    android:background="@drawable/background_disable"
                     android:text="@string/ProfileSetup_Label__Other"
-                    app:layout_constraintBottom_toBottomOf="@+id/fb_female"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_female"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fb_female"
-                    app:layout_constraintTop_toTopOf="@+id/fb_male" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cb_terms_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp16"
-                    android:backgroundTint="@color/activeColorPrimary"
-                    android:buttonTint="@color/activeColorPrimary"
-                    app:layout_constraintBottom_toBottomOf="@+id/ftv_terms_service"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/ftv_terms_service" />
+                    app:layout_constraintStart_toEndOf="@+id/btn_female"
+                    app:layout_constraintTop_toTopOf="@+id/btn_male" />
 
                 <TextView
-                    android:id="@+id/ftv_terms_service"
+                    android:id="@+id/ftv_allow_gather_data"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp16"
@@ -264,48 +234,33 @@
                     android:layout_marginEnd="@dimen/dp16"
                     android:gravity="start"
                     android:minHeight="@dimen/dp24"
-                    android:text="@string/ProfileSetup_Text__IAgreeToTheAHreftermofuseurlterms"
+                    android:text="@string/ProfileSetup_Text__AllowUsToGatherDataUsage"
                     android:textColor="@color/primaryText"
-                    app:layout_constraintBottom_toTopOf="@+id/ftv_allow_gather_data"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/cb_terms_service"
-                    app:layout_constraintTop_toBottomOf="@+id/fb_female" />
+                    app:layout_constraintStart_toEndOf="@+id/cbCollectData"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_female"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cb_collect_data"
-                    android:layout_width="0dp"
+                    android:id="@+id/cbCollectData"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp16"
                     android:backgroundTint="@color/activeColorPrimary"
                     android:buttonTint="@color/activeColorPrimary"
                     app:layout_constraintBottom_toBottomOf="@+id/ftv_allow_gather_data"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ftv_terms_service"
                     app:layout_constraintTop_toTopOf="@+id/ftv_allow_gather_data" />
 
-                <TextView
-                    android:id="@+id/ftv_allow_gather_data"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp16"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:layout_marginBottom="@dimen/dp24"
-                    android:layout_marginEnd="@dimen/dp16"
-                    android:gravity="start"
-                    android:minHeight="@dimen/dp24"
-                    android:text="@string/ProfileSetup_Text__AllowUsToGatherDataUsage"
-                    android:textColor="@color/primaryText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/cb_collect_data"
-                    app:layout_constraintTop_toBottomOf="@+id/ftv_terms_service" />
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <Button
-            android:id="@+id/fb_create_account"
+            android:id="@+id/btn_create_account"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp12"

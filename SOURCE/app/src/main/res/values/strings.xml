@@ -35,7 +35,7 @@
     <string name="ProfileSetup_Text__AllowUsToGatherDataUsage">Allow us to gather data usage to improve your experience over time.</string>
 
 
-    <string name="Login_CTA__Forgot">Forgot</string>
+    <string name="Login_CTA__Forgot">Forgot Password</string>
     <string name="Login_Text__DontHaveAnAccount">Don\'t have an account?</string>
     <string name="Login_Text__OrLogInVia">Or log in via</string>
     <string name="Login_Text__PasswordIncorrect">Password incorrect</string>

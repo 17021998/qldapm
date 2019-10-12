@@ -15,14 +15,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_close"
-                android:layout_width="@dimen/dp60"
-                android:layout_height="@dimen/dp60"
-                android:padding="@dimen/dp16"
-                android:src="@drawable/ic_close_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_forgot"
@@ -32,11 +24,12 @@
                 android:importantForAccessibility="no"
                 android:padding="@dimen/dp12"
                 android:text="@string/Login_CTA__Forgot"
+                android:textStyle="italic"
                 android:textAllCaps="true"
                 android:textColor="@color/primaryColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="@dimen/dp18"
+                android:textSize="@dimen/dp14"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,7 +57,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="30dp"
+                    android:layout_marginTop="@dimen/dp40"
+                    android:textSize="@dimen/dp30"
                     android:textColor="@color/primaryColor"
                     android:textAllCaps="true"
                     />
@@ -91,6 +85,7 @@
                             android:layout_marginStart="@dimen/dp24"
                             android:layout_marginTop="@dimen/dp44"
                             android:layout_marginEnd="@dimen/dp24"
+                            android:focusable="true"
                             app:layout_constraintBottom_toTopOf="@+id/input_password"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +95,7 @@
                                 android:id="@+id/et_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:focusable="true"
                                 android:hint="@string/CreateAccount_Input__Email"
                                 android:inputType="textEmailAddress" />
                         </com.google.android.material.textfield.TextInputLayout>
