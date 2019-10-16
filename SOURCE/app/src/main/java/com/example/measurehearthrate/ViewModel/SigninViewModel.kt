@@ -1,11 +1,10 @@
 package com.example.measurehearthrate.ViewModel
 
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Base.BaseViewModel
-import com.example.measurehearthrate.Base.MyApplication
+import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Helper.ValidationHelper
 import com.example.measurehearthrate.Usecase.SigninUsecase
 import com.example.measurehearthrate.Utils.CoroutineUsecase
@@ -20,10 +19,14 @@ class SigninViewModel @Inject constructor() : BaseViewModel() {
     private var mEmail: String? = null
     private var mPassword: String? = null
 
-    private var mBtnLoginState: MutableLiveData<UiBtnLoginWrapper> = MutableLiveData()
+    private var mLoginState: MutableLiveData<UiLoginWrapper> = MutableLiveData()
+    //private var mDialogState: MutableLiveData<DialogWrapper> = MutableLiveData()
 
-    val btnLoginState: LiveData<UiBtnLoginWrapper>
-        get() = mBtnLoginState
+    val loginState: LiveData<UiLoginWrapper>
+        get() = mLoginState
+
+//    val dialogState: LiveData<DialogWrapper>
+//        get() = mDialogState
 
     override fun start() {
     }
@@ -32,26 +35,28 @@ class SigninViewModel @Inject constructor() : BaseViewModel() {
         mEmail = email
         mPassword = pass
 
+        DialogHelper.emitDialogState(true)
         mSigninUsecase.executeUsecase(SigninUsecase.RequestValue(email, pass),
                 object : CoroutineUsecase.UseCaseCallBack<SigninUsecase.ResponseValue, SigninUsecase.ErrorValue> {
                     override fun onSuccess(responseValue: SigninUsecase.ResponseValue) {
-                            emitLoginState(true, false, false)
+                        DialogHelper.emitDialogState(false)
+                        emitLoginState(true, false, false)
                     }
 
                     override fun onError(errorValue: SigninUsecase.ErrorValue) {
+                        DialogHelper.emitDialogState(false)
                         when (errorValue.errorCode) {
                             ResponseCode.ERROR_PASSWORD -> {
-                                emitLoginState(false, true, true,false,true)
+                                emitLoginState(false, true, true, false, true)
                             }
                             ResponseCode.WRONG_EMAIL -> {
-                                emitLoginState(false, true, true,true)
+                                emitLoginState(false, true, true, true)
 
                             }
                         }
                     }
 
                 })
-        //emitLoginState(true,true)
     }
 
     fun onEmailTextChanged(email: String) {
@@ -81,27 +86,29 @@ class SigninViewModel @Inject constructor() : BaseViewModel() {
         val isEmailValid = ValidationHelper.isEmailValid(mEmail!!)
 
         if (isEmailPassEmpty && isEmailValid) {
-            emitLoginState(null,true, true)
+            emitLoginState(null, true, true)
         }
     }
 
 
     private fun emitLoginState(
-            isLoginSuccess: Boolean ?= null,
+            isLoginSuccess: Boolean? = null,
             enableEmailCheck: Boolean = false,
             enableBtnLogin: Boolean = false,
             wrongEmail: Boolean = false,
             wrongPassword: Boolean = false
     ) {
-        val uiBtnLoginModel = UiBtnLoginWrapper(isLoginSuccess, enableEmailCheck, enableBtnLogin,wrongEmail,wrongPassword)
-        mBtnLoginState.postValue(uiBtnLoginModel)
+        val uiLoginModel = UiLoginWrapper(isLoginSuccess, enableEmailCheck, enableBtnLogin, wrongEmail, wrongPassword)
+        mLoginState.postValue(uiLoginModel)
     }
 
-    data class UiBtnLoginWrapper(
+    data class UiLoginWrapper(
             var isLoginSuccess: Boolean?,
             var enableChecked: Boolean,
             var isEnable: Boolean,
             var wrongEmail: Boolean,
             var wrongPassword: Boolean
     )
+
+
 }
