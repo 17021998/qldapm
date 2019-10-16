@@ -6,8 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -99,7 +97,7 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun viewModelObserve() {
-        mViewModel.btnLoginState.observe(this, Observer {
+        mViewModel.loginState.observe(this, Observer {
             val btnLoginModel = it ?: return@Observer
 
             mBinding.get()?.ivCheckedEmail?.let {
