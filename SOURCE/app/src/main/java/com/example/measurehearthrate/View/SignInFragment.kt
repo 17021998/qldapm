@@ -40,8 +40,8 @@ class SignInFragment : BaseFragment() {
         MyApplication.instance.appComponent
                 .plus(SignInModule())
                 .inject(this)
-
-        //mViewModel = ViewModelProviders.of(this, appViewModelFactory).get(SigninViewModel::class.java)
+        dasdaddasdas
+        mViewModel = ViewModelProviders.of(this, appViewModelFactory).get(SigninViewModel::class.java)
 
 
         mBinding = AutoClearedValue(this, databinding)
