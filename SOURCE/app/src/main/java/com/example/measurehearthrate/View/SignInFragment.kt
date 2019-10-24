@@ -40,7 +40,7 @@ class SignInFragment : BaseFragment() {
         MyApplication.instance.appComponent
                 .plus(SignInModule())
                 .inject(this)
-        dasdaddasdas
+
         mViewModel = ViewModelProviders.of(this, appViewModelFactory).get(SigninViewModel::class.java)
 
 
