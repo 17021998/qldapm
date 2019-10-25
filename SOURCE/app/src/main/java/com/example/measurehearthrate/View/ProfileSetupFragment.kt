@@ -133,19 +133,21 @@ class ProfileSetupFragment : BaseFragment() {
         mViewModel.uiState.observe(this, Observer {
             val uiModel = it ?: return@Observer
 
+            Log.d("abc","$uiModel")
+
             mBinding.get()?.ivCheckedFirstName?.let {
-                it.visibility = if (uiModel.isFirstnameEmpty) View.VISIBLE else View.GONE
+                it.visibility = if (!uiModel.isFirstnameEmpty) View.VISIBLE else View.GONE
             }
 
             mBinding.get()?.ivCheckedLastName?.let {
-                it.visibility = if (uiModel.isLastnamEmpty) View.VISIBLE else View.GONE
+                it.visibility = if (!uiModel.isLastnamEmpty) View.VISIBLE else View.GONE
             }
 
             if (uiModel.genderChose != null) {
                 updateGender(uiModel.genderChose!!)
             }
 
-            if(uiModel.birthdayClick) {
+            if(!uiModel.birthdayNull) {
                 mBinding.get()?.etBirthday?.setText(mViewModel.getBirthDay())
             }
 

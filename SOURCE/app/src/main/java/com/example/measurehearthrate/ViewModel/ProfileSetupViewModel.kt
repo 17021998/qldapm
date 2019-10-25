@@ -1,8 +1,5 @@
 package com.example.measurehearthrate.ViewModel
 
-import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Base.BaseViewModel
@@ -11,7 +8,7 @@ import com.example.measurehearthrate.Helper.DateHelper
 import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.Utils.Gender
-import io.reactivex.internal.operators.single.SingleDoOnSuccess
+import com.example.measurehearthrate.Utils.TextUtils
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -76,19 +73,19 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
         isEnableBtnCreateAccount()
     }
 
-    fun isEnableBtnCreateAccount() {
+    private fun isEnableBtnCreateAccount() {
         if (mDataUsageChecked && !TextUtils.isEmpty(mBirthDay) && !TextUtils.isEmpty(mGender) && isFirstNameValid && isLastNameValid) {
             emitUiState(
-                    !mFirstName.isNullOrEmpty(),
-                    !mLastName.isNullOrEmpty(),
-                    !mBirthDay.isNullOrEmpty(),
+                    mFirstName.isNullOrEmpty(),
+                    mLastName.isNullOrEmpty(),
+                    mBirthDay.isNullOrEmpty(),
                     mGender?.let { Gender.getObjectGender(it) },
                     true)
         } else {
             emitUiState(
-                    !mFirstName.isNullOrEmpty(),
-                    !mLastName.isNullOrEmpty(),
-                    !mBirthDay.isNullOrEmpty(),
+                    mFirstName.isNullOrEmpty(),
+                    mLastName.isNullOrEmpty(),
+                    mBirthDay.isNullOrEmpty(),
                     mGender?.let { Gender.getObjectGender(it) },
                     false)
         }
@@ -106,9 +103,9 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
         }
 
         emitUiState(
-                !mFirstName.isNullOrEmpty(),
-                !mLastName.isNullOrEmpty(),
-                !mBirthDay.isNullOrEmpty(),
+                mFirstName.isNullOrEmpty(),
+                mLastName.isNullOrEmpty(),
+                mBirthDay.isNullOrEmpty(),
                 mGender?.let { Gender.getObjectGender(it) },
                 true,
                 true)
@@ -122,14 +119,14 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
     }
 
     fun emitUiState(
-            isFirstnameEmpty: Boolean = false,
-            isLastnamEmpty: Boolean = false,
-            birthdayClick: Boolean = false,
+            isFirstnameEmpty: Boolean = true,
+            isLastnamEmpty: Boolean = true,
+            birthdayNull: Boolean = true,
             genderChose: Gender? = null,
             isEnableBtnCreate: Boolean = false,
             isCreateSuccess: Boolean = false
     ) {
-        val uiModel = UIWrapper(isFirstnameEmpty, isLastnamEmpty, birthdayClick, genderChose, isEnableBtnCreate,isCreateSuccess)
+        val uiModel = UIWrapper(isFirstnameEmpty, isLastnamEmpty, birthdayNull, genderChose, isEnableBtnCreate,isCreateSuccess)
         mUiState.postValue(uiModel)
     }
 
@@ -137,7 +134,7 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
     data class UIWrapper(
             var isFirstnameEmpty: Boolean,
             var isLastnamEmpty: Boolean,
-            var birthdayClick: Boolean,
+            var birthdayNull: Boolean,
             var genderChose: Gender?,
             var isEnableBtnCreate: Boolean,
             var isCreateSuccess: Boolean

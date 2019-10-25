@@ -1,8 +1,8 @@
 package com.example.measurehearthrate.Utils
 
 enum class Gender constructor(val gender: String) {
-    MALE("F"),
-    FEMALE("M"),
+    MALE("M"),
+    FEMALE("F"),
     OTHER("O");
 
     override fun toString(): String {
@@ -12,8 +12,8 @@ enum class Gender constructor(val gender: String) {
     companion object {
         fun getObjectGender(value: String) : Gender? {
             when(value) {
-                "F" -> return MALE
-                "M" -> return FEMALE
+                "M" -> return MALE
+                "F" -> return FEMALE
                 "O" -> return OTHER
                 else -> return null
             }
