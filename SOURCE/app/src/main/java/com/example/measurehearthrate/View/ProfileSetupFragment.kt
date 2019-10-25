@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_profile_setup.*
 import javax.inject.Inject
 import android.app.DatePickerDialog
 import android.util.Log
+import com.example.measurehearthrate.Helper.DialogHelper
 import java.util.*
 
 
@@ -158,6 +159,17 @@ class ProfileSetupFragment : BaseFragment() {
                 activity?.let {
                     MainActivity.start(it)
                     it.finish()
+                }
+            }
+        })
+
+        DialogHelper.dialogState.observe(this, Observer {
+            val dialogModel = it?:return@Observer
+
+            dialogModel.isshowingDialog?.let {
+                when(it) {
+                    true -> showLoadingDialog()
+                    else -> hideLoadingDialog()
                 }
             }
         })

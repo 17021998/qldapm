@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Base.BaseViewModel
 import com.example.measurehearthrate.Database.UserDatabase
 import com.example.measurehearthrate.Helper.DateHelper
+import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.Utils.Gender
 import io.reactivex.internal.operators.single.SingleDoOnSuccess
@@ -98,6 +99,7 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
     }
 
     fun createAccountWithEmail() {
+        DialogHelper.emitDialogState(true)
         val user = User(mEmail!!,mPassword!!,mFirstName!!,mLastName!!,mGender!!,mBirthDay!!)
         bgScope.launch {
             userDatabase.userDAO().insertUser(user)
@@ -110,6 +112,8 @@ class ProfileSetupViewModel @Inject constructor(private val userDatabase: UserDa
                 mGender?.let { Gender.getObjectGender(it) },
                 true,
                 true)
+
+        DialogHelper.emitDialogState(false)
     }
 
     fun receiveEmailPassword(email: String?, password: String?) {

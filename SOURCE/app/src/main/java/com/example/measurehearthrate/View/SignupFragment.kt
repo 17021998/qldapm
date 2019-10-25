@@ -17,6 +17,7 @@ import com.example.measurehearthrate.Base.BaseFragment
 import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Dagger.Module.SignUpModule
 import com.example.measurehearthrate.Factory.AppViewModelFactory
+import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Interface.SignupContracts
 import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.R
@@ -169,7 +170,6 @@ class SignUpFragment : BaseFragment(), SignupContracts {
             }
 
             if(btnSignUpModel.isEnable) {
-
                 enableSignUpButton()
             }
             else {
@@ -177,6 +177,16 @@ class SignUpFragment : BaseFragment(), SignupContracts {
             }
         })
 
+        DialogHelper.dialogState.observe(this, Observer {
+            val dialogModel = it?:return@Observer
+
+            dialogModel.isshowingDialog?.let {
+                when(it) {
+                    true -> showLoadingDialog()
+                    else -> hideLoadingDialog()
+                }
+            }
+        })
 
     }
 

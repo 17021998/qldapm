@@ -19,8 +19,8 @@
 
     <string name="SignUp_PasswordInput_Text__ContainsBothLettersNumbers">contains both letters &amp; numbers</string>
     <string name="SignUp_PasswordInput_Text__Min7Characters">min. 7 characters</string>
-    <string name="SignUp_InputError_Text__InvalidEmailAddress">Invalid email address.</string>
-    <string name="SignUp_EmailInUse_Text__ThisEmailIsAlreadyInUse">This email is already in use.</string>
+    <string name="SignUp_InputError_Text__InvalidEmailAddress">Invalid email address</string>
+    <string name="SignUp_EmailInUse_Text__ThisEmailIsAlreadyInUse">This email is already in use</string>
     <string name="ProfileSetup_Title__TellUsAboutYourself">Tell us about yourself</string>
     <string name="ProfileSetup_List__FirstName">First Name</string>
     <string name="ProfileSetup_List__LastName">Last Name</string>
