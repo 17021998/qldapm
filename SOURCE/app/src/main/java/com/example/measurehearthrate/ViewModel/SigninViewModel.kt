@@ -1,6 +1,5 @@
 package com.example.measurehearthrate.ViewModel
 
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Base.BaseViewModel
@@ -9,12 +8,14 @@ import com.example.measurehearthrate.Helper.ValidationHelper
 import com.example.measurehearthrate.Usecase.SigninUsecase
 import com.example.measurehearthrate.Utils.CoroutineUsecase
 import com.example.measurehearthrate.Utils.ResponseCode
+import com.example.measurehearthrate.Utils.TextUtils
 import javax.inject.Inject
 
-class SigninViewModel @Inject constructor() : BaseViewModel() {
+class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsecase) : BaseViewModel() {
 
-    @Inject
-    lateinit var mSigninUsecase: SigninUsecase
+    companion object {
+        const val TAG = "SigninViewModel"
+    }
 
     private var mEmail: String? = null
     private var mPassword: String? = null
@@ -46,7 +47,7 @@ class SigninViewModel @Inject constructor() : BaseViewModel() {
                     override fun onError(errorValue: SigninUsecase.ErrorValue) {
                         DialogHelper.emitDialogState(false)
                         when (errorValue.errorCode) {
-                            ResponseCode.ERROR_PASSWORD -> {
+                            ResponseCode.WRONG_PASSWORD -> {
                                 emitLoginState(false, true, true, false, true)
                             }
                             ResponseCode.WRONG_EMAIL -> {
@@ -83,7 +84,7 @@ class SigninViewModel @Inject constructor() : BaseViewModel() {
 
     fun isEnableSignInButton() {
         val isEmailPassEmpty = !TextUtils.isEmpty(mEmail) && !TextUtils.isEmpty(mPassword)
-        val isEmailValid = ValidationHelper.isEmailValid(mEmail!!)
+        val isEmailValid = ValidationHelper.isEmailValid(mEmail)
 
         if (isEmailPassEmpty && isEmailValid) {
             emitLoginState(null, true, true)

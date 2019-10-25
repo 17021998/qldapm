@@ -13,6 +13,7 @@ import com.example.measurehearthrate.Base.BaseFragment
 import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Dagger.Module.SignInModule
 import com.example.measurehearthrate.Factory.AppViewModelFactory
+import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Helper.LanguagesHelper
 import com.example.measurehearthrate.R
 import com.example.measurehearthrate.Utils.AutoClearedValue
@@ -78,10 +79,6 @@ class SignInFragment : BaseFragment() {
                 }
             })
 
-            binding.ivClose.setOnClickListener {
-                activity?.finish()
-            }
-
             binding.tvDontHaveAccount.setOnClickListener {
                 SignUpActivity.start(it.context)
             }
@@ -126,6 +123,17 @@ class SignInFragment : BaseFragment() {
                         it.inputEmail.error = ""
                         it.inputPassword.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__PasswordIncorrect)
                     }
+                }
+            }
+        })
+
+        DialogHelper.dialogState.observe(this, Observer {
+            val dialogModel = it?:return@Observer
+
+            dialogModel.isshowingDialog?.let {
+                when(it) {
+                    true -> showLoadingDialog()
+                    else -> hideLoadingDialog()
                 }
             }
         })

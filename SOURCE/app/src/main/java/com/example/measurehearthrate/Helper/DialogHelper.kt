@@ -3,7 +3,7 @@ package com.example.measurehearthrate.Helper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-class DialogHelper {
+open class DialogHelper {
 
 
     companion object {
@@ -20,9 +20,9 @@ class DialogHelper {
             mDialogState.postValue(dialogModel)
 
         }
-
-        data class DialogWrapper(
-                var isshowingDialog: Boolean?
-        )
     }
+
+    data class DialogWrapper(
+            var isshowingDialog: Boolean?
+    )
 }

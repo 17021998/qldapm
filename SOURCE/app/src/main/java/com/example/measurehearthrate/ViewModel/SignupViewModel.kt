@@ -1,6 +1,5 @@
 package com.example.measurehearthrate.ViewModel
 
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,18 +7,15 @@ import com.example.measurehearthrate.Helper.ValidationHelper
 import com.example.measurehearthrate.R
 import com.example.measurehearthrate.Base.BaseViewModel
 import com.example.measurehearthrate.Base.MyApplication
-import com.example.measurehearthrate.Database.UserDatabase
 import com.example.measurehearthrate.Helper.AuthenticationEmailExistingHelper
+import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Helper.LanguagesHelper
-import com.example.measurehearthrate.Model.User
 import com.example.measurehearthrate.Utils.CoroutineUsecase
-import com.example.measurehearthrate.Utils.MD5Algorithm
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.measurehearthrate.Utils.TextUtils
 import javax.inject.Inject
 
 
-class SignUpViewModel @Inject constructor() : BaseViewModel() {
+open class SignUpViewModel @Inject constructor(private var mAuthenticationEmailExisting: AuthenticationEmailExistingHelper) : BaseViewModel() {
 
 
     private var mEmail: String? = null
@@ -28,10 +24,6 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     private var mEmailState: MutableLiveData<UiEmailWrapper> = MutableLiveData()
     private var mPasswordState: MutableLiveData<UiPassWordWrapper> = MutableLiveData()
     private var mSignUpButtonState: MutableLiveData<UiSignUpButtonWrapper> = MutableLiveData()
-    private lateinit var userDatabase: UserDatabase
-
-    @Inject
-    lateinit var mAuthenticationEmailExisting: AuthenticationEmailExistingHelper
 
 
     val emailState: LiveData<UiEmailWrapper>
@@ -48,31 +40,25 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     }
 
     override fun start() {
-        userDatabase = MyApplication.userDatabase
         isEnableSignUpButton()
     }
 
     fun register(email: String, pass: String) {
-
+        DialogHelper.emitDialogState(true)
         mAuthenticationEmailExisting.executeUsecase(AuthenticationEmailExistingHelper.RequestValues(email),
                 object : CoroutineUsecase.UseCaseCallBack<AuthenticationEmailExistingHelper.ResponseValue, AuthenticationEmailExistingHelper.ResponseError> {
                     override fun onSuccess(responseValue: AuthenticationEmailExistingHelper.ResponseValue) {
                         when (responseValue.isExisting) {
                             true -> { // email tồn tại
-                                emitEmailState(false, true, LanguagesHelper.getString(MyApplication.instance,R.string.SignUp_EmailInUse_Text__ThisEmailIsAlreadyInUse))
+                                //Log.d(TAG,"Email existed")
+                                DialogHelper.emitDialogState(false)
+                                emitEmailState(true, true, LanguagesHelper.getString(MyApplication.instance,R.string.SignUp_EmailInUse_Text__ThisEmailIsAlreadyInUse))
                             }
                             false -> {
-                                mEmail = email
-                                mPassword = MD5Algorithm.md5Encrypt(pass)
-                                Log.d(TAG,"SignupViewModel - Password encrypted: $mPassword")
-
-                                bgScope.launch {
-
-                                    userDatabase.userDAO().insertUser(User(mEmail!!, mPassword!!))
-                                }
+                                //Log.d(TAG,"Email not existed")
+                                DialogHelper.emitDialogState(false)
                                 emitBtnSignUpState(true, true)
                             }
-
                         }
                     }
 
@@ -86,7 +72,13 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     fun onEmailTextChanged(email: String) {
         mEmail = email
         isEmailValid()
-//        isEnableSignUpButton()
+        isEnableSignUpButton()
+    }
+
+    fun onPasswordChanged(pass: String? = mPassword) {
+        mPassword = pass
+        isPassValid()
+        isEnableSignUpButton()
     }
 
     private fun isEmailValid(): Boolean {
@@ -103,25 +95,19 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     }
 
-    fun onPasswordChanged(pass: String? = mPassword) {
-        mPassword = pass
-        isPassValid()
-//        isEnableSignUpButton()
-    }
-
     private fun isPassValid(): Boolean {
         return if (mPassword.isNullOrEmpty()) {
             emitPasswordState(false, false)
             false
         } else {
-            val isMinCharMet = ValidationHelper.isMinPasswordVilid(mPassword!!)
-            val isFormatMet = ValidationHelper.isPasswordFormatdValid(mPassword!!)
+            val isMinCharMet = ValidationHelper.isMinPasswordVilid(mPassword)
+            val isFormatMet = ValidationHelper.isPasswordFormatdValid(mPassword)
             emitPasswordState(isMinCharMet, isFormatMet)
             isMinCharMet && isFormatMet
         }
     }
 
-    fun isEnableSignUpButton() {
+    private fun isEnableSignUpButton() {
         val isEmailPasswordEmpty = TextUtils.isEmpty(mEmail) || TextUtils.isEmpty(mPassword)
         val isEmailMet = isEmailValid()
         val isPasswordMet = isPassValid()

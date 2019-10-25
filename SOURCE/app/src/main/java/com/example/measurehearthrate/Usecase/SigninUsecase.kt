@@ -9,7 +9,6 @@ import com.example.measurehearthrate.Utils.CoroutineUsecase
 import com.example.measurehearthrate.Utils.MD5Algorithm
 import com.example.measurehearthrate.Utils.ResponseCode
 import javax.inject.Inject
-import kotlin.math.log
 
 class SigninUsecase @Inject constructor(private var userDatabase: UserDatabase):
         CoroutineUsecase<SigninUsecase.RequestValue,SigninUsecase.ResponseValue,SigninUsecase.ErrorValue>() {
@@ -28,7 +27,7 @@ class SigninUsecase @Inject constructor(private var userDatabase: UserDatabase):
             if(encryptedPass.equals(response.mPassword)) {
                 return ResponseValue(response)
             } else {
-                return ErrorValue(ResponseCode.ERROR_PASSWORD,MyApplication.instance.resources.getString(R.string.Login_Text__PasswordIncorrect))
+                return ErrorValue(ResponseCode.WRONG_PASSWORD,MyApplication.instance.resources.getString(R.string.Login_Text__PasswordIncorrect))
             }
         } else {
             return ErrorValue(ResponseCode.WRONG_EMAIL,MyApplication.instance.resources.getString(R.string.Login_Text__EmailIsNotRegister))
