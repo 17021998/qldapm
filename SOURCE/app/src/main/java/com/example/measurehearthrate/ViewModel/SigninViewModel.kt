@@ -3,8 +3,11 @@ package com.example.measurehearthrate.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.measurehearthrate.Base.BaseViewModel
+import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Helper.DialogHelper
+import com.example.measurehearthrate.Helper.LanguagesHelper
 import com.example.measurehearthrate.Helper.ValidationHelper
+import com.example.measurehearthrate.R
 import com.example.measurehearthrate.Usecase.SigninUsecase
 import com.example.measurehearthrate.Utils.CoroutineUsecase
 import com.example.measurehearthrate.Utils.ResponseCode
@@ -51,7 +54,7 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
                                 emitLoginState(false, true, true, false, true)
                             }
                             ResponseCode.WRONG_EMAIL -> {
-                                emitLoginState(false, true, true, true)
+                                emitLoginState(false, true, true, true, null ,LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__EmailIsNotRegister))
 
                             }
                         }
@@ -63,10 +66,12 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
     fun onEmailTextChanged(email: String) {
         mEmail = email
         isEmailValid()
+        isEnableSignInButton()
     }
 
     fun onPasswordTextChanged(pass: String) {
         mPassword = pass
+        isEnableSignInButton()
     }
 
     private fun isEmailValid(): Boolean {
@@ -74,10 +79,10 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
             emitLoginState(null, false, false)
             false
         } else if (!ValidationHelper.isEmailValid(mEmail!!)) {
-            emitLoginState(null, false, false)
+            emitLoginState(null, false, false, true,null ,LanguagesHelper.getString(MyApplication.instance, R.string.SignUp_InputError_Text__InvalidEmailAddress))
             false
         } else {
-            emitLoginState(null, true, false)
+            emitLoginState(null, true, false,false,null,null)
             true
         }
     }
@@ -87,7 +92,7 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
         val isEmailValid = ValidationHelper.isEmailValid(mEmail)
 
         if (isEmailPassEmpty && isEmailValid) {
-            emitLoginState(null, true, true)
+            emitLoginState(null, true, true,false,null,null)
         }
     }
 
@@ -96,10 +101,11 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
             isLoginSuccess: Boolean? = null,
             enableEmailCheck: Boolean = false,
             enableBtnLogin: Boolean = false,
-            wrongEmail: Boolean = false,
-            wrongPassword: Boolean = false
+            wrongEmail: Boolean = false ,
+            wrongPassword: Boolean? = null,
+            emailError: String?= null
     ) {
-        val uiLoginModel = UiLoginWrapper(isLoginSuccess, enableEmailCheck, enableBtnLogin, wrongEmail, wrongPassword)
+        val uiLoginModel = UiLoginWrapper(isLoginSuccess, enableEmailCheck, enableBtnLogin, wrongEmail, wrongPassword,emailError)
         mLoginState.postValue(uiLoginModel)
     }
 
@@ -108,7 +114,8 @@ class SigninViewModel @Inject constructor(private var mSigninUsecase: SigninUsec
             var enableChecked: Boolean,
             var isEnable: Boolean,
             var wrongEmail: Boolean,
-            var wrongPassword: Boolean
+            var wrongPassword: Boolean?,
+            var emailError: String?
     )
 
 

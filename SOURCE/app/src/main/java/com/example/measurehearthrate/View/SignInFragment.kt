@@ -61,7 +61,6 @@ class SignInFragment : BaseFragment() {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     mViewModel.onEmailTextChanged(s.toString())
-                    mViewModel.isEnableSignInButton()
                 }
 
             })
@@ -75,7 +74,6 @@ class SignInFragment : BaseFragment() {
 
                 override fun afterTextChanged(s: Editable?) {
                     mViewModel.onPasswordTextChanged(s.toString())
-                    mViewModel.isEnableSignInButton()
                 }
             })
 
@@ -113,25 +111,28 @@ class SignInFragment : BaseFragment() {
                         MainActivity.start(it)
                         it.finish()
                     }
-                } else if (btnLoginModel.wrongEmail){
-                    mBinding.get()?.let {
-                        it.inputEmail.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__EmailIsNotRegister)
-                        it.inputPassword.error = ""
-                    }
-                } else {
-                    mBinding.get()?.let {
-                        it.inputEmail.error = ""
-                        it.inputPassword.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__PasswordIncorrect)
-                    }
+                }
+            }
+
+            mBinding.get()?.let {
+                it.inputEmail.isErrorEnabled = btnLoginModel.wrongEmail
+                it.inputEmail.error = btnLoginModel.emailError
+            }
+
+
+            if(btnLoginModel.wrongPassword != null) {
+                mBinding.get()?.let {
+                    it.inputPassword.isErrorEnabled = btnLoginModel.wrongPassword!!
+                    it.inputPassword.error = LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__PasswordIncorrect)
                 }
             }
         })
 
         DialogHelper.dialogState.observe(this, Observer {
-            val dialogModel = it?:return@Observer
+            val dialogModel = it ?: return@Observer
 
             dialogModel.isshowingDialog?.let {
-                when(it) {
+                when (it) {
                     true -> showLoadingDialog()
                     else -> hideLoadingDialog()
                 }

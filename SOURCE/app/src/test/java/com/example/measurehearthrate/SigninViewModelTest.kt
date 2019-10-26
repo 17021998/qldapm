@@ -1,6 +1,7 @@
 package com.example.measurehearthrate
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.measurehearthrate.Base.MyApplication
 import com.example.measurehearthrate.Helper.DialogHelper
 import com.example.measurehearthrate.Helper.ValidationHelper
 import com.example.measurehearthrate.Model.User
@@ -43,6 +44,9 @@ class SigninViewModelTest {
     @Mock
     private lateinit var mSignInUsecase: SigninUsecase
 
+    @Mock
+    private lateinit var mApp: MyApplication
+
     private lateinit var userResponse: User
 
     companion object {
@@ -66,6 +70,7 @@ class SigninViewModelTest {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.initMocks(this)
         mViewModel = SigninViewModel(mSignInUsecase)
+        Whitebox.setInternalState(MyApplication::class.java, "instance", mApp)
         userResponse = User("abc@gmail.com","abc1234")
     }
 
@@ -83,7 +88,8 @@ class SigninViewModelTest {
                 enableChecked = false,
                 isEnable = false,
                 wrongEmail = false,
-                wrongPassword = false
+                wrongPassword = null,
+                emailError = null
         )
 
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
@@ -92,13 +98,17 @@ class SigninViewModelTest {
 
     @Test
     fun onEmailTextChange_Email_Invalid() {
+        doReturn("Invalid email address")
+                .`when`(mApp)
+                .getString(any())
         mViewModel.onEmailTextChanged("abc")
         val expectedState = SigninViewModel.UiLoginWrapper(
                 isLoginSuccess = null,
                 enableChecked = false,
                 isEnable = false,
-                wrongEmail = false,
-                wrongPassword = false
+                wrongEmail = true,
+                wrongPassword = null,
+                emailError = "Invalid email address"
         )
 
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
@@ -113,7 +123,8 @@ class SigninViewModelTest {
                 enableChecked = true,
                 isEnable = false,
                 wrongEmail = false,
-                wrongPassword = false
+                wrongPassword = null,
+                emailError = null
         )
 
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
@@ -134,7 +145,8 @@ class SigninViewModelTest {
                 enableChecked = false,
                 isEnable = false,
                 wrongEmail = false,
-                wrongPassword = false
+                wrongPassword = null,
+                emailError = null
         )
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
         assert(expectedState == uiState)
@@ -155,7 +167,8 @@ class SigninViewModelTest {
                 enableChecked = true,
                 isEnable = true,
                 wrongEmail = false,
-                wrongPassword = true
+                wrongPassword = true,
+                emailError = null
         )
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
         assert(expectedState == uiState)
@@ -164,6 +177,9 @@ class SigninViewModelTest {
 
     @Test
     fun login_failed_wrong_email() {
+        doReturn("Email is not register")
+                .`when`(mApp)
+                .getString(any())
         mViewModel.login("abc@gmail.com","abc123")
         var uiDialog = LiveDataTestUtils.getValue(DialogHelper.dialogState)
         assert(showDialog == uiDialog)
@@ -176,7 +192,8 @@ class SigninViewModelTest {
                 enableChecked = true,
                 isEnable = true,
                 wrongEmail = true,
-                wrongPassword = false
+                wrongPassword = null,
+                emailError = "Email is not register"
         )
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
         assert(expectedState == uiState)
@@ -192,7 +209,8 @@ class SigninViewModelTest {
                 enableChecked = true,
                 isEnable = true,
                 wrongEmail = false,
-                wrongPassword = false
+                wrongPassword = null,
+                emailError = null
         )
         val uiState = LiveDataTestUtils.getValue(mViewModel.loginState)
         assert(expectedState == uiState)
