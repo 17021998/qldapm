@@ -19,7 +19,7 @@ before_script:
   - android list targets
 script:
   - ./SOURCE/gradlew build --stacktrace
-  - ./SOURCE/gradlew clean assembleDebug assembleRelease testDebug
+  - ./SOURCE/gradlew assembleDebug assembleRelease testDebug
 
 notifications:
   email:
