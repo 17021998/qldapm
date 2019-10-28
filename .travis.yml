@@ -19,7 +19,7 @@ before_script:
   - android list targets
 script:
   - ./SOURCE/gradlew build --stacktrace
-  - ./SOURCE/gradlew assembleDebug assembleRelease testDebug
+  #- ./SOURCE/gradlew assembleDebug assembleRelease testDebug
 
 notifications:
   email:
@@ -29,5 +29,6 @@ notifications:
       - phanquankrb@gmail.com
       - tanhaha123.mail@gmail.com
       - ntquyen98@gmail.com
+      - hophongit98@gmail.com
     on_success: always
     on_failure: always
