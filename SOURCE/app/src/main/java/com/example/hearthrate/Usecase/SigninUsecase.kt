@@ -14,23 +14,28 @@ class SigninUsecase @Inject constructor(private var userDatabase: UserDatabase):
         CoroutineUsecase<SigninUsecase.RequestValue,SigninUsecase.ResponseValue,SigninUsecase.ErrorValue>() {
 
     override suspend fun run(requestValues: RequestValue?): Any? {
-        if(requestValues == null) {
-            return ErrorValue(ErrorCode.UNKNOWN_ERROR,"")
-        }
-        val response = userDatabase.userDAO().getUserByEmail(requestValues.email)
+        if(MyApplication.instance.hasNetworkConnection()) {
+            if(requestValues == null) {
+                return ErrorValue(ErrorCode.UNKNOWN_ERROR,"")
+            }
+            val response = userDatabase.userDAO().getUserByEmail(requestValues.email)
 
-        if(response != null) {
-            Log.d(TAG,"Pass before encrypted: ${response.mPassword}")
-            val encryptedPass = MD5Algorithm.md5Encrypt(requestValues.password)
-            Log.d(TAG,"Pass after encrypted: $encryptedPass")
-            if(encryptedPass.equals(response.mPassword)) {
-                return ResponseValue(response)
+            if(response != null) {
+                Log.d(TAG,"Pass before encrypted: ${response.mPassword}")
+                val encryptedPass = MD5Algorithm.md5Encrypt(requestValues.password)
+                Log.d(TAG,"Pass after encrypted: $encryptedPass")
+                if(encryptedPass.equals(response.mPassword)) {
+                    return ResponseValue(response)
+                } else {
+                    return ErrorValue(ErrorCode.WRONG_PASSWORD,MyApplication.instance.resources.getString(R.string.Login_Text__PasswordIncorrect))
+                }
             } else {
-                return ErrorValue(ErrorCode.WRONG_PASSWORD,MyApplication.instance.resources.getString(R.string.Login_Text__PasswordIncorrect))
+                return ErrorValue(ErrorCode.WRONG_EMAIL,MyApplication.instance.resources.getString(R.string.Login_Text__EmailIsNotRegister))
             }
         } else {
-            return ErrorValue(ErrorCode.WRONG_EMAIL,MyApplication.instance.resources.getString(R.string.Login_Text__EmailIsNotRegister))
+            return ErrorValue(ErrorCode.NO_INTERNET_CONNECTION,"")
         }
+
     }
 
 

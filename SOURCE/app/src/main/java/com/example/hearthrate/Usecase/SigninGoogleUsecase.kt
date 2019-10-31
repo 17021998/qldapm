@@ -2,10 +2,12 @@ package com.example.hearthrate.Usecase
 
 import android.util.Log
 import com.example.hearthrate.Base.BaseActivity
+import com.example.hearthrate.Helper.DialogHelper
 import com.example.hearthrate.Interface.SocialLoginCallback
 import com.example.hearthrate.Model.SocialAuth
 import com.example.hearthrate.Utils.CoroutineUsecase
 import com.example.hearthrate.Utils.ErrorCode
+import com.google.android.gms.common.ConnectionResult
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -15,20 +17,21 @@ class SigninGoogleUsecase @Inject constructor(private var mSigninGoogleManager: 
     override suspend fun run(requestValues: RequestValue?): Any? = try {
         Log.d(TAG, "running Usecase")
         //if(MyApplication.instance.hasNetworkConnection()) {
-            mSigninGoogleManager.loginWithGoogle(requestValues?.activityContext!!, object : SocialLoginCallback {
+            mSigninGoogleManager.loginWithGoogle(requestValues?.activity!!, object : SocialLoginCallback {
                 override fun onLoginSucessed(mAuth: SocialAuth) {
-                    Log.d(TAG, "onLoginSucessed with mAuth: $mAuth")
-                    onSuccess(ResponseValue(mAuth))
+                    Log.d(TAG, "onLoginSucessed")
+                    DialogHelper.emitDialogState(false)
                 }
 
-                override fun onLoginFailed(errorCode: Int) {
+                override fun onLoginFailed(errorCode: Int, connectionResult: ConnectionResult?) {
                     Log.d(TAG, "onLoginFailed")
-                    onError(ResponseError(errorCode))
+                    DialogHelper.emitDialogState(false)
                 }
+
             })
 
 //        } else {
-//            return ErrorValue(ErrorCode.NO_INTERNET_CONNECTION)
+//            ResponseError(ErrorCode.NO_INTERNET_CONNECTION)
 //        }
     } catch (exception: Exception) {
         Log.d(TAG, "Inside .run failed with exceprtion=$exception")
@@ -36,7 +39,7 @@ class SigninGoogleUsecase @Inject constructor(private var mSigninGoogleManager: 
     }
 
 
-    class RequestValue(val activityContext: WeakReference<BaseActivity>) : CoroutineUsecase.RequestValue
+    class RequestValue(val activity: WeakReference<BaseActivity>) : CoroutineUsecase.RequestValue
 
     class ResponseValue(val mAuth: SocialAuth) : CoroutineUsecase.ResponseValue
 

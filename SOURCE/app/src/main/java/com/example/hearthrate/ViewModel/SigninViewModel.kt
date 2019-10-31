@@ -17,9 +17,8 @@ import com.example.hearthrate.Utils.TextUtils
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class SigninViewModel @Inject constructor(private var mContext: BaseActivity,
-                                          private var mSigninUsecase: SigninUsecase,
-                                          private var mSigninGoogleUsecase: SigninGoogleUsecase) : BaseViewModel() {
+class SigninViewModel @Inject constructor(private val mSigninUsecase: SigninUsecase,
+                                          private val mSigninGoogleUsecase: SigninGoogleUsecase) : BaseViewModel() {
 
     companion object {
         const val TAG = "SigninViewModel"
@@ -30,19 +29,14 @@ class SigninViewModel @Inject constructor(private var mContext: BaseActivity,
     private var mPassword: String? = null
 
     private var mLoginState: MutableLiveData<UiLoginWrapper> = MutableLiveData()
-    //private var mDialogState: MutableLiveData<DialogWrapper> = MutableLiveData()
 
     val loginState: LiveData<UiLoginWrapper>
         get() = mLoginState
-
-//    val dialogState: LiveData<DialogWrapper>
-//        get() = mDialogState
 
     override fun start() {
     }
 
     fun login(email: String, pass: String) {
-        // if(MyApplication.instance.hasNetworkConnection()) {
         mEmail = email
         mPassword = pass
 
@@ -62,48 +56,34 @@ class SigninViewModel @Inject constructor(private var mContext: BaseActivity,
                             }
                             ErrorCode.WRONG_EMAIL -> {
                                 emitLoginState(false, true, true, true, null, LanguagesHelper.getString(MyApplication.instance, R.string.Login_Text__EmailIsNotRegister))
+                            }
+                            ErrorCode.NO_INTERNET_CONNECTION -> {
+                                emitLoginState(false, true, true, false, null, null,ErrorCode.NO_INTERNET_CONNECTION)
 
                             }
                         }
                     }
 
                 })
-//        } else {
-//            emitLoginState(false, true, true, false, false,null, ErrorCode.NO_INTERNET_CONNECTION)
-//        }
-
     }
 
-    fun loginWithGoogle() {
-        //if(MyApplication.instance.hasNetworkConnection()) {
+    fun loginWithGoogle(activity: BaseActivity) {
         DialogHelper.emitDialogState(true)
-        mSigninGoogleUsecase.executeUsecase(SigninGoogleUsecase.RequestValue(WeakReference(mContext)),
+        mSigninGoogleUsecase.executeUsecase(SigninGoogleUsecase.RequestValue(WeakReference(activity)),
                 object : CoroutineUsecase.UseCaseCallBack<SigninGoogleUsecase.ResponseValue,SigninGoogleUsecase.ResponseError> {
                     override fun onSuccess(responseValue: SigninGoogleUsecase.ResponseValue) {
-
+                        DialogHelper.emitDialogState(false)
                     }
 
                     override fun onError(errorValue: SigninGoogleUsecase.ResponseError) {
-
+                        DialogHelper.emitDialogState(false)
                     }
 
                 })
-
-
-        //} else {
-        //            emitLoginState(false, true, true, false, false,null, ErrorCode.NO_INTERNET_CONNECTION)
-
-        //}
     }
 
     fun loginWithFacebook() {
-        //if(MyApplication.instance.hasNetworkConnection()) {
 
-
-        //} else {
-        //            emitLoginState(false, true, true, false, false,null, ErrorCode.NO_INTERNET_CONNECTION)
-
-        //}
     }
 
 

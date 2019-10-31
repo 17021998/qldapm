@@ -16,21 +16,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class SigninGoogleManager @Inject constructor() {
+class SigninGoogleManager @Inject constructor(){
 
     private lateinit var gso: GoogleSignInOptions
     private var mGoogleSignInClient : GoogleSignInClient? = null
-    private var callback: SocialLoginCallback? = null
+    private var mCallback: SocialLoginCallback? = null
     private var weakFragmentActivity: WeakReference<BaseActivity>? = null
 
-    fun loginWithGoogle(activity: WeakReference<BaseActivity>,callBack: SocialLoginCallback) {
+    fun loginWithGoogle(activity: WeakReference<BaseActivity>, callback: SocialLoginCallback) {
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(MyApplication.instance.applicationContext, gso)
-        this.callback = callback
-        this.weakFragmentActivity = activity
+        mCallback = callback
+        weakFragmentActivity = activity
         disconnectGoogleConnection()
         connectNewAccount()
     }
@@ -52,12 +52,12 @@ class SigninGoogleManager @Inject constructor() {
     private fun handleSignInResult(result: GoogleSignInResult?) {
         if(result == null) {
             disconnectGoogleConnection()
-            callback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR)
+            mCallback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR, null)
         } else {
             if(result.isSuccess) {
                 val account = result.signInAccount
                 if(account == null) {
-                    callback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR)
+                    mCallback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR, null)
                 } else {
                     val ggAuth = SocialAuth()
                     ggAuth.email = account.email ?: ""
@@ -65,32 +65,34 @@ class SigninGoogleManager @Inject constructor() {
                     ggAuth.lastName = account.familyName ?: ""
                     ggAuth.id = account.id ?: ""
                     ggAuth.token = account.idToken ?: ""
-                    callback?.onLoginSucessed(ggAuth)
                     disconnectGoogleConnection()
+                    mCallback?.onLoginSucessed(ggAuth)
                 }
-
+            } else {
+                disconnectGoogleConnection()
+                mCallback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR,null)
             }
         }
 
     }
 
-
     private fun connectNewAccount() {
         Log.d(TAG, "connectNewAccount")
         if (weakFragmentActivity != null && weakFragmentActivity!!.get() != null && mGoogleSignInClient != null) {
             val signInIntent = mGoogleSignInClient!!.signInIntent
-            weakFragmentActivity!!.get()?.startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
+            weakFragmentActivity?.get()?.startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         } else {
-            callback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR)
+            mCallback?.onLoginFailed(ErrorCode.UNKNOWN_ERROR,null)
         }
     }
 
     private fun disconnectGoogleConnection() {
-        logOut(weakFragmentActivity as WeakReference<Activity>?)
+        logOut(weakFragmentActivity )
     }
 
-    fun logOut(weakActivity: WeakReference<Activity>? = null) {
-        if (weakActivity?.get() != null && GoogleSignIn.getLastSignedInAccount(weakActivity.get()) != null) {
+    fun logOut(weakActivity: WeakReference<BaseActivity>? = null) {
+        val context = weakActivity?.get()
+        if ( context != null && GoogleSignIn.getLastSignedInAccount(MyApplication.instance.applicationContext) != null) {
             Log.d(TAG, "inside .logOut(), googleSignInClient=$mGoogleSignInClient")
             if (mGoogleSignInClient != null) {
                 val signOutTask = mGoogleSignInClient!!.signOut()

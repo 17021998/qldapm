@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.hearthrate.Base.BaseActivity
 import com.example.hearthrate.Base.BaseFragment
 import com.example.hearthrate.Base.MyApplication
 import com.example.hearthrate.Dagger.Module.SignInModule
@@ -17,6 +18,7 @@ import com.example.hearthrate.Helper.DialogHelper
 import com.example.hearthrate.Helper.LanguagesHelper
 import com.example.hearthrate.R
 import com.example.hearthrate.Utils.AutoClearedValue
+import com.example.hearthrate.Utils.DialogUtils
 import com.example.hearthrate.ViewModel.SigninViewModel
 import com.example.hearthrate.databinding.FragmentSigninBinding
 import kotlinx.android.synthetic.main.fragment_signin.*
@@ -86,7 +88,7 @@ class SignInFragment : BaseFragment() {
             }
 
             binding.ivGoogle.setOnClickListener {
-                mViewModel.loginWithGoogle()
+                mViewModel.loginWithGoogle(activity as BaseActivity)
             }
         }
 
@@ -149,7 +151,7 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun handleErrorCode(errorCode: Int) {
-
+        DialogUtils.showError(errorCode,childFragmentManager)
     }
 
     private fun disableBtnSignIn() {
