@@ -1,20 +1,27 @@
 package com.example.hearthrate.Base
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.hearthrate.R
+import com.example.hearthrate.Utils.DialogUtils
+import com.example.hearthrate.View.AlertDialogFragment
 import com.example.hearthrate.View.DialogLoadingFragment
+import kotlinx.android.synthetic.main.dialog_confirm.view.*
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity(), AlertDialogFragment.OnDialogFragmentResult {
 
 
     protected val TAG = this.javaClass.simpleName
 
     private val mHandler = Handler()
 
-    private var mDialogFragment: DialogLoadingFragment?= null
+    private var mDialogFragment: DialogLoadingFragment? = null
 
     protected fun addFragment(fragment: Fragment, tag: String?, frameId: Int) {
         supportFragmentManager.beginTransaction()
@@ -25,7 +32,7 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG,"BaseActivity onCreate")
+        Log.d(TAG, "BaseActivity onCreate")
         MyApplication.instance.appComponent.inject(this)
     }
 
@@ -34,7 +41,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun showLoadingDialog(title: String) {
-        showLoadingDialog(false,title)
+        showLoadingDialog(false, title)
     }
 
     private fun showLoadingDialog(cancelable: Boolean, title: String = "") {
@@ -83,5 +90,17 @@ open class BaseActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    override fun onDialogFragmentResult(tag: String, actionId: Int, data: Intent) {
+        when (tag) {
+            DialogUtils.NO_INTERNET_CONNECTION -> when (actionId) {
+                R.id.tv_ok -> navigateToWifiSetting()
+            }
+        }
+    }
+
+    private fun navigateToWifiSetting() {
+        startActivity(Intent(Settings.ACTION_SETTINGS))
     }
 }

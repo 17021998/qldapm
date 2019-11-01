@@ -44,7 +44,7 @@
     <string name="Text_Confirm__Ok">OK</string>
     <string name="Text_Confirm__TryAgain">Try Again</string>
     <string name="Text_Confirm__Cancel">CANCEL</string>
-    <string name="ConnectionError_Title__NetworkError">No Internet Connection</string>
+    <string name="ConnectionError_Title__NetworkError">Network Error</string>
     <string name="ConnectionError_Text__PleaseCheckYourInternetConnectionAnd">Please check your Internet connection and try again.</string>
 
 

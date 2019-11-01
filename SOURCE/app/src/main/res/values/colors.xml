@@ -16,4 +16,6 @@
     <color name="secondaryText">#727272</color>
     <color name="nonReachGoal">#a7a7a7</color>
     <color name="background_70">#B3FAF8F6</color>
+    <color name="transparent">#00ffffff</color>
+
 </resources>
