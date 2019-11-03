@@ -17,7 +17,7 @@ before_script:
   # Create and start emulator
   - android list targets
 script:
-  - ./SOURCE/gradlew tasks --info
+  - ./SOURCE/gradlew tasks --info --all
   
   #- ./SOURCE/gradlew build connectedCheck #--stacktrace
   #- ./SOURCE/gradlew assembleDebug assembleRelease testDebug
