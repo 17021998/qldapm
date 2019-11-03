@@ -17,11 +17,19 @@ before_script:
   # Create and start emulator
   - android list targets
 script:
-  - ./SOURCE/gradlew init
-  - ./SOURCE/gradlew build
+  - ./SOURCE/gradlew build --scan -s
   
   #- ./SOURCE/gradlew build connectedCheck #--stacktrace
   #- ./SOURCE/gradlew assembleDebug assembleRelease testDebug
 
 notifications:
   email: true
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
