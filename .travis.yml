@@ -17,17 +17,11 @@ before_script:
   # Create and start emulator
   - android list targets
 script:
-  - ./SOURCE/gradlew build connectedCheck --stacktrace
+  - ./SOURCE/gradlew tasks --info
+  - ./SOURCE/gradlew build connectedCheck #--stacktrace
   #- ./SOURCE/gradlew assembleDebug assembleRelease testDebug
 
 notifications:
-  email:
-    recipients:
-      - aquarius.superstar@gmail.com
-      - thinhnguyenkim155@gmail.com
-      - phanquankrb@gmail.com
-      - tanhaha123.mail@gmail.com
-      - ntquyen98@gmail.com
-      - hophongit98@gmail.com
+  email: true
     on_success: always
     on_failure: always
