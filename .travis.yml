@@ -18,7 +18,8 @@ before_script:
   - android list targets
 script:
   - ./SOURCE/gradlew tasks --info
-  - ./SOURCE/gradlew build connectedCheck #--stacktrace
+  
+  #- ./SOURCE/gradlew build connectedCheck #--stacktrace
   #- ./SOURCE/gradlew assembleDebug assembleRelease testDebug
 
 notifications:
